@@ -201,33 +201,90 @@ body {
 .btn-apagar:hover { color: #ff5c5c; }
 .btn-reiniciar:hover { color: #4da6ff; }
 
-/* ---------- Navegación por pestañas ---------- */
+/* ---------- Encabezado y menú hamburguesa ---------- */
 
-.tabs-nav {
-  display: flex;
-  gap: 8px;
-  margin-top: 20px;
-  border-bottom: 1px solid #2a2e33;
+.encabezado {
+  position: relative;
+  margin-bottom: 32px;
 }
 
-.tab-btn {
+.encabezado-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.btn-hamburguesa {
+  background: #1a1d21;
+  border: 1px solid #2a2e33;
+  border-radius: 8px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.btn-hamburguesa span {
+  width: 18px;
+  height: 2px;
+  background: #e4e6eb;
+  border-radius: 2px;
+}
+
+.btn-hamburguesa:hover span {
+  background: #00e08a;
+}
+
+.menu-desplegable {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  width: 220px;
+  background: #15181c;
+  border: 1px solid #242830;
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 10;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.menu-item {
   background: none;
   border: none;
-  color: #9aa0a6;
-  padding: 10px 4px;
-  font-size: 14px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-
-.tab-btn:hover {
   color: #e4e6eb;
+  text-align: left;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-.tab-activo {
+.menu-item:hover {
+  background: #1f2328;
+}
+
+.menu-item-activo {
   color: #00e08a;
-  border-bottom: 2px solid #00e08a;
   font-weight: 600;
+}
+
+.menu-item-secundario {
+  color: #9aa0a6;
+  font-size: 13px;
+}
+
+.menu-separador {
+  height: 1px;
+  background: #242830;
+  margin: 6px 4px;
 }
 
 /* ---------- Roadmap ---------- */
@@ -297,4 +354,216 @@ body {
   width: 2px;
   height: 32px;
   background: #2a2e33;
+}
+
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ---------- Landing ---------- */
+/* ---------- Landing ---------- */
+
+.landing {
+  min-height: 100vh;
+  background: #0d0f11;
+  color: #e8eaed;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 90px;
+}
+
+.landing-fondo {
+  position: absolute;
+  inset: 0;
+  height: 900px;
+  background-image:
+    linear-gradient(#1a1d21 1px, transparent 1px),
+    linear-gradient(90deg, #1a1d21 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 30% 10%, black, transparent 65%);
+  opacity: 0.5;
+}
+
+.landing-hero {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 90px 32px 0;
+  text-align: center;
+}
+
+.landing-logo {
+  font-family: 'JetBrains Mono', monospace;
+  color: #00e08a;
+  font-size: 14px;
+}
+
+.landing-titulo {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 38px;
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 18px auto 18px;
+  max-width: 18ch;
+}
+
+.landing-descripcion {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #9aa0a6;
+  max-width: 46ch;
+  margin: 0 auto 36px;
+}
+
+.landing-terminal {
+  background: #15181c;
+  border: 1px solid #242830;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.terminal-barra {
+  display: flex;
+  gap: 7px;
+  padding: 12px 14px;
+  background: #1a1d21;
+  border-bottom: 1px solid #242830;
+}
+
+.terminal-punto { width: 11px; height: 11px; border-radius: 50%; }
+.punto-rojo { background: #ff5f56; }
+.punto-amarillo { background: #ffbd2e; }
+.punto-verde { background: #27c93f; }
+
+.terminal-cuerpo { padding: 20px; line-height: 1.9; }
+.terminal-prompt { color: #00e08a; margin-right: 6px; }
+.terminal-json { color: #4da6ff; padding-left: 18px; }
+.terminal-cursor { animation: parpadeo 1s step-end infinite; }
+
+@keyframes parpadeo { 50% { opacity: 0; } }
+
+.landing-accesos {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.btn-landing { padding: 14px 26px; font-size: 15px; }
+
+/* Flujo de pasos: conectado con líneas, sin cortes de sección */
+
+.landing-flujo {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 32px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.paso { flex: 1; text-align: left; }
+
+.paso-num {
+  font-family: 'JetBrains Mono', monospace;
+  color: #00e08a;
+  font-size: 13px;
+  border: 1px solid #242830;
+  background: #0d0f11;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.paso-linea {
+  flex: 0 0 40px;
+  height: 1px;
+  background: #242830;
+  margin-top: 13px;
+}
+
+.paso h3 { font-size: 15px; margin-bottom: 6px; }
+.paso p { font-size: 13px; color: #9aa0a6; line-height: 1.6; max-width: 24ch; }
+
+/* Laboratorios dentro del home */
+
+.landing-labs {
+  position: relative;
+  max-width: 1000px;
+  margin: 64px auto 0;
+  padding: 0 32px;
+}
+
+.landing-labs-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 22px;
+}
+
+.landing-labs-encabezado h2 {
+  font-size: 20px;
+}
+
+.link-roadmap {
+  background: none;
+  border: none;
+  color: #00e08a;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.link-roadmap:hover { text-decoration: underline; }
+
+.landing-labs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.mini-lab {
+  background: #15181c;
+  border: 1px solid #242830;
+  border-radius: 8px;
+  padding: 18px;
+  transition: border-color 0.2s;
+}
+
+.mini-lab:hover { border-color: #00e08a; }
+
+.mini-lab-nivel {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #00e08a;
+  background: rgba(0, 224, 138, 0.12);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.mini-lab h3 { font-size: 14px; margin-bottom: 6px; }
+.mini-lab p { font-size: 12px; color: #9aa0a6; line-height: 1.5; }
+
+.landing-cta-final {
+  text-align: center;
+  margin-top: 56px;
+}
+
+@media (max-width: 800px) {
+  .landing-flujo { flex-direction: column; gap: 24px; }
+  .paso-linea { display: none; }
+  .landing-labs-grid { grid-template-columns: 1fr 1fr; }
+  .landing-accesos { flex-direction: column; align-items: center; }
 }
