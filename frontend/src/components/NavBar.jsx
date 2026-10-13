@@ -2,7 +2,7 @@ function NavBar({ ip, vista, irA, irAlHome, cambiarIp }) {
   return (
     <nav className="navbar">
       <button className="navbar-logo" onClick={irAlHome}>
-        <span className="navbar-logo-icono">//</span> lab.web.hacking
+        Laboratorios Web
       </button>
 
       <div className="navbar-links">
@@ -16,7 +16,7 @@ function NavBar({ ip, vista, irA, irAlHome, cambiarIp }) {
           className={`navbar-link ${vista === 'roadmap' ? 'navbar-link-activo' : ''}`}
           onClick={() => irA('roadmap')}
         >
-          Roadmap
+          Rutas de Aprendizaje
         </button>
       </div>
 
@@ -24,7 +24,7 @@ function NavBar({ ip, vista, irA, irAlHome, cambiarIp }) {
         <span className="punto-estado"></span>
         <span className="navbar-ip-texto">{ip}</span>
         <button className="navbar-ip-cambiar" onClick={cambiarIp}>
-          Cambiar
+          Cambiar IP
         </button>
       </div>
     </nav>

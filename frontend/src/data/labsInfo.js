@@ -1,46 +1,67 @@
-export const ROADMAP = [
-  { nombre: 'DVWA', nivel: 1, descripcion: 'Vulnerabilidades clásicas con niveles de dificultad ajustables.' },
-  { nombre: 'OWASP Juice Shop', nivel: 1, descripcion: 'Más de 100 retos gamificados sobre una SPA moderna.' },
-];
+import { ROADMAP_MODULOS, obtenerRoadmapLab } from './roadmapsData.js';
 
-export const RUTAS_LAB = {
-  DVWA: '/dvwa/',
-  'OWASP Juice Shop': ':3000/',
+export { ROADMAP_MODULOS, obtenerRoadmapLab };
+
+// Configuración real de rutas y puertos en la Raspberry Pi
+export const CONFIG_LABS = {
+  DVWA: {
+    puerto: 80,
+    ruta: '/dvwa/',
+    descripcionCorta: 'Servidor PHP/MySQL en /dvwa/ de la Raspberry Pi',
+  },
+  'OWASP Juice Shop': {
+    puerto: 3000,
+    ruta: '/',
+    rutaAlternativa: '/juice-shop/',
+    descripcionCorta: 'Aplicación Node.js en puerto 3000 de la Raspberry Pi',
+  },
 };
+
+export function obtenerPuertoLab(nombreLab, labObj) {
+  if (labObj?.puerto) return labObj.puerto;
+  if (labObj?.port) return labObj.port;
+  return CONFIG_LABS[nombreLab]?.puerto ?? 80;
+}
+
+export function obtenerUrlLab(ip, nombreLab, labObj) {
+  const conf = CONFIG_LABS[nombreLab];
+  const puerto = obtenerPuertoLab(nombreLab, labObj);
+  const ruta = conf?.ruta || '/';
+
+  // Si el puerto es el 80 estándar, no concatenamos el número de puerto en la URL
+  if (puerto === 80) {
+    return `http://${ip}${ruta}`;
+  }
+
+  return `http://${ip}:${puerto}${ruta}`;
+}
+
+export const ROADMAP = [
+  {
+    nombre: 'DVWA',
+    nivel: 1,
+    puerto: 80,
+    ruta: '/dvwa/',
+    categoria: 'OWASP Top 10 Clásico',
+    descripcion: 'Vulnerabilidades en PHP/MySQL alojadas en /dvwa/ de la Raspberry Pi con niveles de dificultad ajustables.',
+    modulosCount: ROADMAP_MODULOS.DVWA?.modulos?.length || 8,
+  },
+  {
+    nombre: 'OWASP Juice Shop',
+    nivel: 1,
+    puerto: 3000,
+    ruta: '/',
+    categoria: 'SPA Moderna & API REST',
+    descripcion: 'Tienda en Angular y Node.js desplegada en el puerto 3000 de la Raspberry Pi con más de 100 retos.',
+    modulosCount: ROADMAP_MODULOS['OWASP Juice Shop']?.modulos?.length || 5,
+  },
+];
 
 export const LAB_INFO = {
   DVWA: {
-    descripcion: 'Aplicación PHP con vulnerabilidades clásicas del OWASP Top 10, con niveles de dificultad ajustables (Low, Medium, High, Impossible).',
-    guia: [
-      'Abre el laboratorio con el botón de abajo.',
-      'Inicia sesión con usuario admin y contraseña password.',
-      'Ve a "DVWA Security" y elige el nivel de dificultad (empieza en Low).',
-      'Explora el menú lateral: cada opción es una categoría de vulnerabilidad distinta.',
-    ],
-    retos: [
-      'Extrae usuarios de la base de datos con una inyección SQL en "SQL Injection"',
-      'Ejecuta un XSS reflejado en el módulo "XSS (Reflected)"',
-      'Almacena un XSS persistente en "XSS (Stored)" y haz que se ejecute solo',
-      'Sube un archivo malicioso a través de "File Upload"',
-      'Lee un archivo del servidor usando "File Inclusion" (LFI)',
-      'Evade la validación del lado del cliente en "Command Injection"',
-    ],
+    descripcion: 'Aplicación PHP con vulnerabilidades del OWASP Top 10 alojada en /dvwa/ de la Raspberry Pi.',
   },
   'OWASP Juice Shop': {
-    descripcion: 'Tienda online moderna (Angular/Node.js) con más de 100 retos gamificados, desde inyecciones hasta lógica de negocio rota.',
-    guia: [
-      'Abre el laboratorio con el botón de abajo.',
-      'No necesitas iniciar sesión para empezar a explorar.',
-      'Busca el ícono de la puntuación (scoreboard) — suele ser uno de los primeros retos encontrarlo.',
-      'Cada reto resuelto se marca automáticamente en el scoreboard.',
-    ],
-    retos: [
-      'Encuentra la página oculta del scoreboard sin que te la digan',
-      'Inicia sesión como administrador sin conocer su contraseña (SQLi)',
-      'Compra un producto por menos de su precio real manipulando la petición',
-      'Encuentra una review de producto que revele información sensible',
-      'Accede al panel de administración sin credenciales válidas',
-      'Resuelve un desafío de la categoría "XSS" del propio menú de puntuación',
-    ],
+    descripcion: 'Tienda moderna en Node.js y Angular alojada en el puerto 3000 de la Raspberry Pi con retos dinámicos.',
   },
 };
