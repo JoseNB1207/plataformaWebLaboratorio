@@ -62,8 +62,15 @@ button {
 }
 
 @keyframes aparecer {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---------- Navbar persistente ---------- */
@@ -96,8 +103,13 @@ button {
   white-space: nowrap;
 }
 
-.navbar-logo-icono { color: var(--acento); }
-.navbar-logo:hover .navbar-logo-icono { text-shadow: 0 0 10px var(--acento); }
+.navbar-logo-icono {
+  color: var(--acento);
+}
+
+.navbar-logo:hover .navbar-logo-icono {
+  text-shadow: 0 0 10px var(--acento);
+}
 
 .navbar-links {
   display: flex;
@@ -128,15 +140,22 @@ button {
   transition: transform 0.2s ease;
 }
 
-.navbar-link:hover { color: var(--texto); }
-.navbar-link:hover::after { transform: scaleX(1); }
+.navbar-link:hover {
+  color: var(--texto);
+}
+
+.navbar-link:hover::after {
+  transform: scaleX(1);
+}
 
 .navbar-link-activo {
   color: var(--acento);
   font-weight: 600;
 }
 
-.navbar-link-activo::after { transform: scaleX(1); }
+.navbar-link-activo::after {
+  transform: scaleX(1);
+}
 
 .navbar-ip {
   display: flex;
@@ -177,8 +196,15 @@ button {
 }
 
 @media (max-width: 720px) {
-  .navbar { flex-wrap: wrap; }
-  .navbar-links { order: 3; width: 100%; justify-content: flex-start; }
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 /* ---------- Formulario de IP (Conexión Pi Node) ---------- */
@@ -361,9 +387,18 @@ button {
   transition: opacity 0.15s, transform 0.1s, box-shadow 0.2s;
 }
 
-.btn:hover:not(:disabled) { transform: translateY(-1px); }
-.btn:active:not(:disabled) { transform: scale(0.97); }
-.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
 
 .btn-primario {
   background: var(--acento);
@@ -381,7 +416,10 @@ button {
   border: 1px solid var(--borde);
 }
 
-.btn-secundario:hover { border-color: var(--acento); color: var(--acento); }
+.btn-secundario:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
 
 .btn-icono {
   background: var(--superficie-alt);
@@ -389,10 +427,19 @@ button {
   border: 1px solid var(--borde);
 }
 
-.btn-encender:hover { color: var(--acento); border-color: var(--acento); }
-.btn-apagar:hover { color: var(--peligro); border-color: var(--peligro); }
+.btn-encender:hover {
+  color: var(--acento);
+  border-color: var(--acento);
+}
 
-.btn-volver { margin-bottom: 24px; }
+.btn-apagar:hover {
+  color: var(--peligro);
+  border-color: var(--peligro);
+}
+
+.btn-volver {
+  margin-bottom: 24px;
+}
 
 /* ---------- Grilla de laboratorios ---------- */
 
@@ -552,8 +599,15 @@ button {
   border-radius: 20px;
 }
 
-.badge-running { background: var(--acento-suave); color: var(--acento); }
-.badge-exited  { background: rgba(139, 146, 156, 0.15); color: var(--texto-muted); }
+.badge-running {
+  background: var(--acento-suave);
+  color: var(--acento);
+}
+
+.badge-exited {
+  background: rgba(139, 146, 156, 0.15);
+  color: var(--texto-muted);
+}
 
 /* ---------- Detalle de laboratorio ---------- */
 
@@ -570,7 +624,9 @@ button {
   margin-bottom: 12px;
 }
 
-.detalle-col-info .badge-estado { margin-bottom: 28px; }
+.detalle-col-info .badge-estado {
+  margin-bottom: 28px;
+}
 
 .detalle-acciones {
   display: flex;
@@ -602,7 +658,9 @@ button {
 }
 
 @media (max-width: 800px) {
-  .detalle-grid { grid-template-columns: 1fr; }
+  .detalle-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------- Roadmap ---------- */
@@ -613,7 +671,9 @@ button {
   gap: 20px;
 }
 
-.roadmap-fila { display: contents; }
+.roadmap-fila {
+  display: contents;
+}
 
 .roadmap-nodo {
   background: var(--superficie);
@@ -637,7 +697,9 @@ button {
   border-color: var(--acento);
 }
 
-.nodo-pendiente { opacity: 0.5; }
+.nodo-pendiente {
+  opacity: 0.5;
+}
 
 .roadmap-nivel {
   display: inline-block;
@@ -653,10 +715,27 @@ button {
   margin-bottom: 12px;
 }
 
-.roadmap-nombre { font-size: 17px; margin-bottom: 8px; }
-.roadmap-descripcion { font-size: 13px; color: var(--texto-muted); margin-bottom: 16px; line-height: 1.5; }
-.roadmap-pendiente-texto { font-size: 12px; color: #5a6068; font-style: italic; }
-.roadmap-linea { display: none; }
+.roadmap-nombre {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.roadmap-descripcion {
+  font-size: 13px;
+  color: var(--texto-muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.roadmap-pendiente-texto {
+  font-size: 12px;
+  color: #5a6068;
+  font-style: italic;
+}
+
+.roadmap-linea {
+  display: none;
+}
 
 /* ---------- Landing (Home Profesional & Atractivo) ---------- */
 
@@ -696,8 +775,15 @@ button {
 }
 
 @keyframes pulso-ambiente {
-  from { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
-  to { opacity: 1; transform: translateX(-50%) scale(1.05); }
+  from {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.05);
+  }
 }
 
 /* ---------- Landing Topbar & Menú Hamburguesa ---------- */
@@ -853,8 +939,13 @@ button {
 }
 
 @keyframes slideDrawer {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .drawer-header {
@@ -1207,9 +1298,17 @@ button {
   border-radius: 50%;
 }
 
-.dot-red { background: #ef4444; }
-.dot-yellow { background: #f59e0b; }
-.dot-green { background: #10b981; }
+.dot-red {
+  background: #ef4444;
+}
+
+.dot-yellow {
+  background: #f59e0b;
+}
+
+.dot-green {
+  background: #10b981;
+}
 
 .terminal-tabs {
   display: flex;
@@ -2610,9 +2709,20 @@ button {
   border-radius: 3px;
 }
 
-.chip-modulo-nivel.nivel-básico { color: #00e08a; background: rgba(0, 224, 138, 0.1); }
-.chip-modulo-nivel.nivel-intermedio { color: #ffaa00; background: rgba(255, 170, 0, 0.1); }
-.chip-modulo-nivel.nivel-avanzado { color: #c084fc; background: rgba(168, 85, 247, 0.1); }
+.chip-modulo-nivel.nivel-básico {
+  color: #00e08a;
+  background: rgba(0, 224, 138, 0.1);
+}
+
+.chip-modulo-nivel.nivel-intermedio {
+  color: #ffaa00;
+  background: rgba(255, 170, 0, 0.1);
+}
+
+.chip-modulo-nivel.nivel-avanzado {
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.1);
+}
 
 .roadmap-card-acciones {
   display: flex;
@@ -2660,14 +2770,17 @@ button {
   .roadmap-layout-split {
     grid-template-columns: 1fr;
   }
+
   .detalle-banner-control {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .banner-control-acciones {
     width: 100%;
     flex-wrap: wrap;
   }
+
   .roadmap-header-info {
     flex-direction: column;
     align-items: flex-start;
@@ -3083,6 +3196,218 @@ button {
   color: #cbd5e1;
   line-height: 1.65;
   margin: 0;
+  white-space: pre-line;
+}
+
+/* ——— Selector de Misiones / Fases del Módulo ——— */
+.rl-misiones-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.rl-misiones-label {
+  font-family: var(--fuente-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--texto-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.rl-misiones-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rl-mision-pill {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  color: var(--texto-muted);
+  font-family: var(--fuente-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rl-mision-pill:hover {
+  border-color: var(--acento);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.rl-mision-pill--activo {
+  background: rgba(0, 224, 138, 0.12);
+  border-color: var(--acento);
+  color: var(--acento);
+  box-shadow: 0 0 12px rgba(0, 224, 138, 0.2);
+}
+
+.rl-mision-pill--hecho {
+  border-color: rgba(0, 224, 138, 0.35);
+  color: #93e6be;
+}
+
+.rl-mision-check {
+  font-weight: 800;
+  color: var(--acento);
+}
+
+/* ——— Misión con Diseño Táctico de Alta Visibilidad ——— */
+.rl-mision-caja {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.12) 0%, rgba(14, 165, 233, 0.04) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  border-left: 4px solid #38bdf8;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 16px rgba(56, 189, 248, 0.08);
+}
+
+.rl-mision-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--fuente-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  flex-shrink: 0;
+}
+
+.rl-mision-icono {
+  color: #38bdf8;
+  animation: pulse-sutil 3s infinite ease-in-out;
+}
+
+@keyframes pulse-sutil {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(0.96); }
+}
+
+.rl-mision-texto {
+  font-family: var(--fuente-body);
+  font-size: 15px;
+  color: #e0f2fe;
+  line-height: 1.6;
+  font-weight: 500;
+  padding-top: 2px;
+}
+
+/* ——— Tarjeta de Paso Independiente ——— */
+.rl-paso-contenido-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: linear-gradient(180deg, #10141b 0%, #0a0d12 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.rl-paso-contenido-card:hover {
+  border-color: rgba(0, 224, 138, 0.35);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 224, 138, 0.05);
+}
+
+.rl-paso-num-circulo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(0, 224, 138, 0.18) 0%, rgba(0, 224, 138, 0.05) 100%);
+  border: 1px solid rgba(0, 224, 138, 0.4);
+  color: var(--acento);
+  font-family: var(--fuente-mono);
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(0, 224, 138, 0.2);
+}
+
+.rl-paso-texto-cuerpo {
+  flex: 1;
+}
+
+.rl-paso-linea {
+  font-family: var(--fuente-body);
+  font-size: 15px;
+  color: #f1f5f9;
+  line-height: 1.7;
+  margin: 0 0 10px 0;
+}
+
+.rl-paso-linea:last-child {
+  margin-bottom: 0;
+}
+
+/* Bullet points destacados y uniformes */
+.rl-paso-bullet-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 6px 0;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+}
+
+.rl-bullet-dot {
+  color: var(--acento);
+  font-size: 11px;
+  font-family: var(--fuente-mono);
+  flex-shrink: 0;
+}
+
+.rl-bullet-texto {
+  font-family: var(--fuente-body);
+  font-size: 14.5px;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+/* Bloque de código o comando dentro del paso */
+.rl-paso-codigo-destacado {
+  margin: 12px 0;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0, 224, 138, 0.25);
+  border-left: 3px solid var(--acento);
+  border-radius: 8px;
+  font-family: var(--fuente-mono);
+  font-size: 13.5px;
+  color: #34d399;
+  word-break: break-all;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.rl-paso-codigo-destacado code {
+  font-family: var(--fuente-mono);
+  color: inherit;
 }
 
 /* Consola / Payload / Snippet */
@@ -3254,17 +3579,21 @@ button {
   .rl-modulos-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
+
   .rl-panel-header-row {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .rl-barra-modulo {
     width: 80px;
   }
+
   .rl-stepper-nav {
     flex-direction: column;
     align-items: stretch;
   }
+
   .rl-stepper-contador {
     text-align: center;
   }
@@ -3798,7 +4127,9 @@ button {
 }
 
 @keyframes pi-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .pi-desconectada-container {
@@ -4146,6 +4477,7 @@ button {
   color: #d1d5db;
   line-height: 1.6;
   margin: 0;
+  white-space: pre-line;
 }
 
 /* Consola de comandos */
@@ -4285,4 +4617,76 @@ button {
   border-radius: 4px;
 }
 
-
+/* ============================================================
+   VERIFICADOR DE FLAG — Sistema de validación de aprendizaje
+   ============================================================ */
+
+/* Badge en las tarjetas de módulo */
+.rl-mod-flag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--fuente-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--acento);
+  background: rgba(0, 224, 138, 0.12);
+  border: 1px solid rgba(0, 224, 138, 0.35);
+  border-radius: 4px;
+  padding: 2px 6px;
+  line-height: 1;
+}
+
+.rl-mod-card--flag-ok {
+  border-color: rgba(0, 224, 138, 0.35) !important;
+}
+
+/* Contenedor principal del verificador */
+.vf-container {
+  margin-top: 28px;
+  background: linear-gradient(135deg, #0f1a12 0%, #111520 100%);
+  border: 1px solid rgba(0, 224, 138, 0.25);
+  border-radius: 14px;
+  padding: 24px 26px;
+  position: relative;
+  overflow: hidden;
+  animation: vf-aparecer 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.vf-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0, 224, 138, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes vf-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Badge de flag verificada en el encabezado del paso */
+.rl-paso-badge-flag-ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--fuente-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--acento);
+  background: rgba(0, 224, 138, 0.12);
+  border: 1px solid rgba(0, 224, 138, 0.35);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  letter-spacing: 0.3px;
+}

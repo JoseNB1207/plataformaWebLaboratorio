@@ -5,9 +5,9 @@ export { ROADMAP_MODULOS, obtenerRoadmapLab };
 // Configuración real de rutas y puertos en la Raspberry Pi
 export const CONFIG_LABS = {
   DVWA: {
-    puerto: 80,
-    ruta: '/dvwa/',
-    descripcionCorta: 'Servidor PHP/MySQL en /dvwa/ de la Raspberry Pi',
+    puerto: 8080,
+    ruta: '/',
+    descripcionCorta: 'Servidor PHP/MySQL en el puerto 8080 de la Raspberry Pi',
   },
   'OWASP Juice Shop': {
     puerto: 3000,
@@ -16,6 +16,42 @@ export const CONFIG_LABS = {
     descripcionCorta: 'Aplicación Node.js en puerto 3000 de la Raspberry Pi',
   },
 };
+
+// Rutas directas a cada módulo/vulnerabilidad para evitar fallos de resolución relativa (404)
+export const RUTAS_MODULOS = {
+  // DVWA
+  'dvwa-brute-force': '/dvwa/vulnerabilities/brute/',
+  'dvwa-command-injection': '/dvwa/vulnerabilities/exec/',
+  'dvwa-csrf': '/dvwa/vulnerabilities/csrf/',
+  'dvwa-fi': '/dvwa/vulnerabilities/fi/?page=include.php',
+  'dvwa-sqli': '/dvwa/vulnerabilities/sqli/',
+  'dvwa-upload': '/dvwa/vulnerabilities/upload/',
+  'dvwa-xss-reflected': '/dvwa/vulnerabilities/xss_r/',
+  'dvwa-xss-stored': '/dvwa/vulnerabilities/xss_s/',
+  // OWASP Juice Shop
+  'juice-sql': '/',
+  'juice-idor': '/#/score-board',
+  'juice-xss': '/',
+  'juice-broken-auth': '/#/login',
+  'juice-security-misconfig': '/',
+};
+
+export function obtenerUrlModulo(ip, nombreLab, moduloId) {
+  if (!ip) return '#';
+  if (nombreLab === 'DVWA') {
+    const ruta = RUTAS_MODULOS[moduloId] || '/dvwa/';
+    return `http://${ip}${ruta}`;
+  }
+  if (nombreLab === 'OWASP Juice Shop') {
+    const ruta = RUTAS_MODULOS[moduloId] || '/';
+    return `http://${ip}:3000${ruta}`;
+  }
+  return `http://${ip}/`;
+}
+
+export function obtenerUrlSecurityDvwa(ip) {
+  return ip ? `http://${ip}/dvwa/security.php` : '#';
+}
 
 export function obtenerPuertoLab(nombreLab, labObj) {
   if (labObj?.puerto) return labObj.puerto;

@@ -166,7 +166,7 @@ function Roadmap({ onSeleccionarLabModulo, onSeleccionarInstalacion, onVolver })
                       Configuracion Inicial
                     </span>
                     <span className="badge-nivel badge-nivel-basico">Basico</span>
-                    <span className="nodo-badge-instalacion-pill">⚡ Obligatorio</span>
+                    <span className="nodo-badge-instalacion-pill">Obligatorio</span>
                   </div>
                 </div>
                 <h3 className="nodo-titulo">Instalacion y Preparacion de Herramientas</h3>

